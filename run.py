@@ -14,26 +14,8 @@ GPIO.setup(27, GPIO.IN)
 def hello_world():
     global on
     on = not on
-    return 'Hello World!'
+    GPIO.output(4, on)
 
-
-def local():
-    print("test")
-    try:
-        while False:
-            #GPIO.output(4, False)
-            print("off")
-            #time.sleep(2)
-            #GPIO.output(4, on)
-            print("on")
-            #time.sleep(2)
-    finally:
-        GPIO.cleanup()
-
-t = threading.Thread(target=local())
-t.daemon = True
-t.start()
-print("still working")
 app.run(host='0.0.0.0')
 
 
