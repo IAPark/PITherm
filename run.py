@@ -15,6 +15,7 @@ def hello_world():
     global on
     on = not on
     GPIO.output(4, on)
+    return "On" if on else "Off"
 
 app.run(host='0.0.0.0')
 
