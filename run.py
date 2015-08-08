@@ -6,6 +6,9 @@ import RPi.GPIO as GPIO
 import time
 
 on = False
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.OUT)
+GPIO.setup(27, GPIO.IN)
 
 @app.route('/')
 def hello_world():
@@ -29,10 +32,6 @@ threading.Thread(target=local()).run()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.OUT)
-GPIO.setup(27, GPIO.IN)
 
 
 
