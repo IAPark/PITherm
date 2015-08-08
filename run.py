@@ -16,15 +16,16 @@ def hello_world():
     on = not on
     return 'Hello World!'
 
+
 def local():
     try:
-        while not GPIO.input(27):
-            GPIO.output(4, False)
+        while not False:
+            #GPIO.output(4, False)
             print("off")
-            time.sleep(2)
-            GPIO.output(4, on)
+            #time.sleep(2)
+            #GPIO.output(4, on)
             print("on")
-            time.sleep(2)
+            #time.sleep(2)
     finally:
         GPIO.cleanup()
 
