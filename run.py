@@ -18,8 +18,9 @@ def hello_world():
 
 
 def local():
+    print("test")
     try:
-        while not False:
+        while False:
             #GPIO.output(4, False)
             print("off")
             #time.sleep(2)
