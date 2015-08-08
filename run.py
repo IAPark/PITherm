@@ -1,8 +1,6 @@
 import RPi.GPIO as GPIO
 import time
 
-# assumes we only do this from one program
-GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
 
@@ -13,6 +11,7 @@ try:
         time.sleep(2)
         GPIO.output(4, True)
         print("on")
+        time.sleep(2)
 except:
     GPIO.cleanup()
 
