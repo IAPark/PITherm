@@ -30,7 +30,7 @@ def local():
 
 t = threading.Thread(target=local())
 t.daemon = True
-t.run()
+t.start()
 print("still working")
 app.run(host='0.0.0.0')
 
