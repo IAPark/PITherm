@@ -4,7 +4,7 @@ app = Flask(__name__)
 import RPi.GPIO as GPIO
 import time
 
-on = False;
+on = False
 
 @app.route('/')
 def hello_world():
@@ -13,7 +13,7 @@ def hello_world():
     return 'Hello World!'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
