@@ -3,7 +3,7 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
-GPIO.setup(27, GPIO.INPUT)
+GPIO.setup(27, GPIO.IN)
 
 try:
     while not GPIO.input(27):
