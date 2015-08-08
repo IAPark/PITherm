@@ -1,6 +1,7 @@
 from flask import Flask
 app = Flask(__name__)
 
+import threading
 import RPi.GPIO as GPIO
 import time
 
@@ -12,6 +13,20 @@ def hello_world():
     on = not on
     return 'Hello World!'
 
+def local():
+    try:
+        while not GPIO.input(27):
+            GPIO.output(4, False)
+            print("off")
+            time.sleep(2)
+            GPIO.output(4, on)
+            print("on")
+            time.sleep(2)
+    finally:
+        GPIO.cleanup()
+
+threading.Thread(target=local()).run()
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 
@@ -19,15 +34,5 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
 GPIO.setup(27, GPIO.IN)
 
-try:
-    while not GPIO.input(27):
-        GPIO.output(4, False)
-        print("off")
-        time.sleep(2)
-        GPIO.output(4, on)
-        print("on")
-        time.sleep(2)
-finally:
-    GPIO.cleanup()
 
 
