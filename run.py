@@ -24,7 +24,7 @@ def toggle_relay():
     return "On" if on else "Off"
 
 @app.route('/temp')
-def read_temp():
+def print_temp():
     global bus
     return "temp is:" + str(read_temp(bus))
 
