@@ -28,7 +28,7 @@ def toggle_temp():
     global bus
     return "temp is:" + str(read_temp(bus))
 
-@app.route('/quit')
+@app.route('/stop')
 def toggle_temp():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
