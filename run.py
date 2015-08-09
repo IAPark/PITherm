@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 app = Flask(__name__)
 
 import RPi.GPIO as GPIO
@@ -12,7 +13,7 @@ GPIO.setup(4, GPIO.OUT)
 GPIO.setup(27, GPIO.IN)
 
 def read_temp(bus):
-    return "temp is:" + str(bus.read_byte(0x48))
+    return bus.read_byte(0x48)
 
 
 @app.route('/')
@@ -24,8 +25,16 @@ def toggle_relay():
 
 @app.route('/temp')
 def toggle_temp():
-    global on
-    return "On" if on else "Off"
+    global bus
+    return "temp is:" + str(read_temp(bus))
+
+@app.route('/quit')
+def toggle_temp():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return "shutting down"
 
 app.run(host='0.0.0.0')
 
