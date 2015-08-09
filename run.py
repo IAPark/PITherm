@@ -24,12 +24,12 @@ def toggle_relay():
     return "On" if on else "Off"
 
 @app.route('/temp')
-def toggle_temp():
+def read_temp():
     global bus
     return "temp is:" + str(read_temp(bus))
 
 @app.route('/stop')
-def toggle_temp():
+def stop():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
