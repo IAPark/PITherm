@@ -26,7 +26,7 @@ def toggle_relay():
 @app.route('/temp')
 def read_temp():
     global bus
-    return "temp is:"
+    return "temp is:" + str(read_temp(bus))
 
 @app.route('/stop')
 def stop():
