@@ -36,7 +36,7 @@ def stop():
     func()
     return "shutting down"
 
-app.run(host='0.0.0.0')
-
+app.run(host='0.0.0.0', debug=True)
+GPIO.cleanup()
 
 
