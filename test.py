@@ -20,10 +20,11 @@ def test_temp_monitor():
     sensor = FakeTempSensor()
     temp_monitor = TempMonitor(sensor)
 
+    global temp
     temp = -1
     @temp_monitor.temp_changed
     def listener(temperature):
-        nonlocal temp
+        global temp
         temp = temperature
     temp_monitor.check_temp()
 
@@ -64,13 +65,16 @@ def test_thermostat():
         def log_air_handler_state(self, AC, heater, fan):
             return
 
-
-    from services import Services
+    import services
+    reload(services)
+    Services = services.Services
 
     sensor = FakeTempSensor()
     Services.TempMonitor = TempMonitor(sensor)
 
-    from services.thermostat import Thermostat
+    import services.thermostat
+    reload(services.thermostat)
+    Thermostat = services.thermostat.Thermostat
 
     heater = FakePin("heater")
     AC = FakePin("AC")
@@ -80,6 +84,8 @@ def test_thermostat():
 
     thermostat.heat_target = 0
     thermostat.AC_target = 100
+    thermostat.AC = True
+    thermostat.heater = True
 
     print("Test temp=0")
     sensor.temp = 0

@@ -1,12 +1,13 @@
 from functools import wraps
 import json
+from pymongo import MongoClient
 
 __author__ = 'Isaac'
 from flask import request, Response
-from services.database import DB
 
-db = DB()
-users = db.client.PITherm.users
+client = MongoClient()
+users = client.PITherm.users
+
 
 class User:
     def __init__(self, username, password):
