@@ -8,7 +8,7 @@ temp_monitor = Services.TempMonitor
 class DB:
     self = None
     def __init__(self):
-        if self is None:
+        if DB.self is None:
             DB.self = self
         self.client = MongoClient()
         self.db = self.client.PITherm
