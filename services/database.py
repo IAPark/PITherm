@@ -16,7 +16,7 @@ class DB:
         self.repeating_schedule = self.db.repeating_schedule
         self.schedule = self.db.schedule
 
-    def log_temp_change(self, temp: int):
+    def log_temp_change(self, temp):
         """Method to be called every time the temperature changes.
 
         Shouldn't need to be changed by the user, but can be
@@ -35,7 +35,7 @@ class DB:
             }
         self.states.insert_one(state_change)
 
-    def set_delayed_state_change(self, start: datetime, end: datetime, AC_target: int, heater_target: int, fan: bool):
+    def set_delayed_state_change(self, start, end, AC_target, heater_target, fan):
         delayed_state_change = {
             "start": start,
             "end": end,
@@ -44,7 +44,7 @@ class DB:
         }
         self.schedule.insert_one(delayed_state_change)
 
-    def set_repeating_state_change(self, seconds_into_week: int, AC_target: int, heater_target: int, fan: bool):
+    def set_repeating_state_change(self, seconds_into_week, AC_target, heater_target, fan):
         repeating_state_change = {
             "week_time": seconds_into_week,
             "state": {"AC_target": AC_target, "heater_target": heater_target, "fan": fan}
@@ -70,5 +70,5 @@ class DB:
 
     @staticmethod
     @temp_monitor.temp_changed
-    def temp_changed(temp: int):
+    def temp_changed(temp):
         DB.self.log_temp_change(temp)

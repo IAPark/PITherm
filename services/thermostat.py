@@ -77,7 +77,7 @@ class Thermostat:
             self.air_handler.set_heater(Off)
 
 
-    def tick(self, now: datetime):
+    def tick(self, now):
         db = Services.DB
         scheduled = db.get_scheduled_state(now)
 
