@@ -9,6 +9,7 @@ class Router:
         def decorator(function):
             self.routes[url] = function
             return function
+        return decorator
 
     def __getitem__(self, item):
         return self.routes[item]
