@@ -41,14 +41,17 @@ def main_loop(command_queue, return_queue):
     @type command_queue: Queue
     """
 
-    command = command_queue.get_nowait()
-    if command is not None:
-        url = None
-        try:
-            url = command["url"]
-            return_queue.put({"url": url, "body": router[url](command["body"])})
-        except KeyError:
-            print("could not handle " + str(url))
+    try:
+        command = command_queue.get(blocking=False)
+        if command is not None:
+            url = None
+            try:
+                url = command["url"]
+                return_queue.put({"url": url, "body": router[url](command["body"])})
+            except KeyError:
+                print("could not handle " + str(url))
+    except Queue.Empty:
+        pass
     Services.TempMonitor.check_temp()
     print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " + str(Services.TempMonitor.last_temp))
     time.sleep(1)
