@@ -8,7 +8,7 @@ app = Flask(__name__)
 command_queue = Queue()
 response_queue = Queue()
 handler = Process(target=start, args=(command_queue, response_queue,))
-handler.run()
+handler.start()
 @app.route('/temp')
 def print_temp():
     command_queue.put({"url": "/temp", "body": 0})
