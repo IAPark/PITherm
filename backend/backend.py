@@ -43,7 +43,7 @@ def main_loop(command_queue, return_queue):
     """
 
     try:
-        command = command_queue.get(blocking=False)
+        command = command_queue.get(block=False)
         if command is not None:
             url = None
             try:
