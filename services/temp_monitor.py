@@ -1,6 +1,3 @@
-import pymongo
-
-
 class TempMonitor:
     def __init__(self, temperature_sensor):
         self.temperature_sensor = temperature_sensor
