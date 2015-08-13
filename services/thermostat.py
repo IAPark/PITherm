@@ -5,7 +5,7 @@ from services.air_handler import AirHandler
 from services import Services
 from constants import *
 
-temp_monitor =  Services.TempMonitor # should be set in any class that imports
+temp_monitor = Services.TempMonitor # should be set in any class that imports
 
 
 class Thermostat:
@@ -16,8 +16,8 @@ class Thermostat:
         """
 
         self.air_handler = air_handler
-        self.AC = True  # should we use the heater to attempt to keep heat in bounds?
-        self.heater = True
+        self.AC = False  # should we use the heater to attempt to keep heat in bounds?
+        self.heater = False
         self.AC_target = None
         self.heat_target = None
         self.threshold = threshold  # should be a temporary value, and should be replaced by an adaptive system

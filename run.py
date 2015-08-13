@@ -1,30 +1,18 @@
 from flask import Flask
 from flask import request
+from hardware_abstraction.pin import Pin
+from multiprocessing import Queue, Process
+from backend.backend import start
 app = Flask(__name__)
 
-import smbus
-
-on = False
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(4, GPIO.OUT)
-GPIO.setup(27, GPIO.IN)
-
-def read_temp(bus):
-    return bus.read_byte(0x48)
-
-
-@app.route('/')
-def toggle_relay():
-    global on
-    on = not on
-    GPIO.output(4, on)
-    return "On" if on else "Off"
-
+command_queue = Queue()
+response_queue = Queue()
+handler = Process(target=start, args=(command_queue, response_queue,))
+handler.run()
 @app.route('/temp')
 def print_temp():
-    global bus
-    return "temp is:" + str(read_temp(bus))
+    command_queue.put({"url": "/temp", "body": 0})
+    return response_queue.get()
 
 @app.route('/stop')
 def stop():
@@ -35,6 +23,5 @@ def stop():
     return "shutting down"
 
 app.run(host='0.0.0.0', debug=True)
-GPIO.cleanup()
-
+Pin.cleanup()
 

@@ -1,8 +1,10 @@
 __author__ = 'Isaac'
+from backend.router import Router
 from services import Services
 from services.temp_monitor import TempMonitor
 from services.air_handler import AirHandler
 from hardware_abstraction import Pin, TemperatureSensor
+from multiprocessing import Queue
 
 class FakePin:
 
@@ -28,22 +30,35 @@ import time
 
 from services.thermostat import Thermostat
 Services.Thermostat = Thermostat(Services.AirHandler, 3)
-
-Services.Thermostat.set_AC_target(21)
-Services.Thermostat.set_heater_target(0)
-
+router = Router()
 
 def centigrade_to_fahrenheit(c):
     return c * 1.8000 + 32
 
-def main_loop():
+def main_loop(command_queue, return_queue):
+    """
+    @type return_queue: Queue
+    @type command_queue: Queue
+    """
+
+    command = command_queue.get_nowait()
+    if command is not None:
+        url = None
+        try:
+            url = command["url"]
+            return_queue.put({"url": url, "body": router[url](command["body"])})
+        except KeyError:
+            print("could not handle " + str(url))
     Services.TempMonitor.check_temp()
     print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " + str(Services.TempMonitor.last_temp))
     time.sleep(1)
 
-@Services.TempMonitor.temp_changed
-def temp_change(temp):
-    print("temp changed now: " + str(centigrade_to_fahrenheit(temp)))
 
-while True:
-    main_loop()
+@router.route("/temp")
+def get_temp(body):
+    return Services.TempMonitor.last_temp
+
+
+def start(command_queue, return_queue):
+    while True:
+        main_loop(command_queue, return_queue)
