@@ -26,7 +26,7 @@ Services.DB = DB()
 Services.AirHandler = AirHandler(AC_pin=Pin(4), fan_pin=FakePin("fan"), heater_pin=FakePin("heater"), db=Services.DB)
 import time
 
-from Services.thermostat import Thermostat
+from services.thermostat import Thermostat
 Services.Thermostat = Thermostat(Services.AirHandler, 3)
 
 
