@@ -66,14 +66,14 @@ class Thermostat:
         if (not self.AC_target is not None and self.AC) or (not self.heat_target is not None and self.heater):
             raise ValueError('AC_target and heat_target')
 
-        if temp > self.AC_target:
+        if self.AC and temp > self.AC_target:
             self.air_handler.set_AC(self.AC)
-        elif temp < self.heat_target:
+        elif self.heater and temp < self.heat_target:
             self.air_handler.set_heater(self.heater)
 
-        if temp < (self.AC_target - self.threshold):
+        if not self.AC or temp < (self.AC_target - self.threshold):
             self.air_handler.set_AC(Off)
-        if temp > (self.heat_target + self.threshold):
+        if not self.heater or temp > (self.heat_target + self.threshold):
             self.air_handler.set_heater(Off)
 
 
