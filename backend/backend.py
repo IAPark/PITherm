@@ -52,7 +52,7 @@ def get_temp(body):
 
 @router.route("/temps")
 def get_temps(body):
-    return list(Services.DB.temps.find().sort({"date": 1}))
+    return list(Services.DB.temps.find().sort([("date", 1)]))
 
 
 def start(command_queue, response_queue):
