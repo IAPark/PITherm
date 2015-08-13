@@ -3,6 +3,7 @@ from flask import request
 from hardware_abstraction.pin import Pin
 from multiprocessing import Queue, Process
 from backend.backend import start
+from bson import json_util
 import json
 app = Flask(__name__)
 
@@ -18,7 +19,7 @@ def print_temp():
 @app.route('/temps')
 def print_temps():
     command_queue.put({"url": "/temps", "body": 0})
-    return json.dumps({"data": response_queue.get()["body"]})
+    return json.dumps({"data": response_queue.get()["body"]}, default=json_util.default)
 
 @app.route('/stop')
 def stop():
