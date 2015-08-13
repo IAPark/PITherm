@@ -34,3 +34,5 @@ def logged_in_route(function):
         if not auth or not valid_user(auth.username, auth.password):
             return bad_auth_message
         return function(*args, **kwargs)
+
+    return wrapper
