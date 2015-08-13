@@ -4,7 +4,8 @@ from services import Services
 from services.temp_monitor import TempMonitor
 from services.air_handler import AirHandler
 from hardware_abstraction import Pin, TemperatureSensor
-from multiprocessing import Queue
+from multiprocessing.queues import Queue
+from multiprocessing.queues import Empty
 
 class FakePin:
 
@@ -50,7 +51,7 @@ def main_loop(command_queue, return_queue):
                 return_queue.put({"url": url, "body": router[url](command["body"])})
             except KeyError:
                 print("could not handle " + str(url))
-    except Queue.Empty:
+    except Empty:
         pass
     Services.TempMonitor.check_temp()
     print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " + str(Services.TempMonitor.last_temp))
