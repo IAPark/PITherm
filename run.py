@@ -16,7 +16,7 @@ def print_temp():
     return str(response_queue.get()["body"])
 
 @app.route('/temps')
-def print_temp():
+def print_temps():
     command_queue.put({"url": "/temps", "body": 0})
     return json.dumps({"data": response_queue.get()["body"]})
 
