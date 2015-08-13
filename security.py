@@ -23,8 +23,7 @@ def valid_user(username, password):
 
 
 bad_auth_message = Response(
-    json.dumps({"error": ["bad login"]}), 401,
-    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    json.dumps({"error": ["bad login"]}), 401)
 
 
 def logged_in_route(function):
