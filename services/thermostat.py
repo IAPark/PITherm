@@ -63,7 +63,7 @@ class Thermostat:
             thermostat.manage(temp)
 
     def manage(self, temp):
-        if (not self.AC_target is not None) or (not self.heat_target is not None):
+        if (not self.AC_target is not None and self.AC) or (not self.heat_target is not None and self.heater):
             raise ValueError('AC_target and heat_target')
 
         if temp > self.AC_target:
