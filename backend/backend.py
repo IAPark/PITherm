@@ -49,7 +49,7 @@ def main_loop():
 def get_temp():
     return Services.TempMonitor.last_temp
 
-@router.routes("/temps")
+@router.route("/temps")
 def get_temps():
     return list(Services.DB.temps.find().sort({"date": 1}))
 
