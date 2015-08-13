@@ -58,11 +58,11 @@ class Thermostat:
 
     @staticmethod
     @temp_monitor.temp_changed
-    def temp_changed(temp: int):
+    def temp_changed(temp):
         for thermostat in Thermostat.thermostats:
             thermostat.manage(temp)
 
-    def manage(self, temp: int):
+    def manage(self, temp):
         if (not self.AC_target is not None) or (not self.heat_target is not None):
             raise ValueError('AC_target and heat_target')
 

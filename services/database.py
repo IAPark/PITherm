@@ -51,11 +51,11 @@ class DB:
         }
         self.repeating_schedule.insert_one(repeating_state_change)
 
-    def get_scheduled_state(self, now: datetime):
+    def get_scheduled_state(self, now):
         now = now.utcnow()
         return self.schedule.find_one({"start": {"$lt": now}, "end": {"$gt": now}})
 
-    def get_repeating_change(self, now: datetime):
+    def get_repeating_change(self, now):
         week_time = now.weekday() * 24 * 60**2 + (now.hour*60 + now.minute)*60
 
         return self.repeating_schedule.aggregate(
