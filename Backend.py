@@ -34,7 +34,7 @@ Services.Thermostat.set_heater_target(0)
 
 
 def centigrade_to_fahrenheit(c):
-    return c * 212/100 + 32
+    return c * 212.0/100.0 + 32
 
 def main_loop():
     Services.TempMonitor.check_temp()
