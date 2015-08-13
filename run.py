@@ -12,7 +12,7 @@ handler.start()
 @app.route('/temp')
 def print_temp():
     command_queue.put({"url": "/temp", "body": 0})
-    return response_queue.get()["body"]
+    return str(response_queue.get()["body"])
 
 @app.route('/stop')
 def stop():
