@@ -38,8 +38,8 @@ def centigrade_to_fahrenheit(c):
 
 def main_loop():
     Services.TempMonitor.check_temp()
-    print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)))
-    time.sleep(30)
+    print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " + str(Services.TempMonitor.last_temp))
+    time.sleep(1)
 
 @Services.TempMonitor.temp_changed
 def temp_change(temp):
