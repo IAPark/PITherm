@@ -5,7 +5,6 @@ from services.temp_monitor import TempMonitor
 from services.air_handler import AirHandler
 from hardware_abstraction import Pin, TemperatureSensor
 from multiprocessing.queues import Queue
-from multiprocessing.queues import Empty
 
 class FakePin:
 
@@ -31,38 +30,33 @@ import time
 
 from services.thermostat import Thermostat
 Services.Thermostat = Thermostat(Services.AirHandler, 3)
-router = Router()
+router = Router(None, None)
 
 def centigrade_to_fahrenheit(c):
     return c * 1.8000 + 32
 
-def main_loop(command_queue, return_queue):
-    """
-    @type return_queue: Queue
-    @type command_queue: Queue
-    """
+def main_loop():
+    global router
 
-    try:
-        command = command_queue.get(block=False)
-        if command is not None:
-            url = None
-            try:
-                url = command["url"]
-                return_queue.put({"url": url, "body": router[url](command["body"])})
-            except KeyError:
-                print("could not handle " + str(url))
-    except Empty:
-        pass
+    router.handle()
     Services.TempMonitor.check_temp()
     print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " + str(Services.TempMonitor.last_temp))
+
     time.sleep(1)
 
 
 @router.route("/temp")
-def get_temp(body):
+def get_temp():
     return Services.TempMonitor.last_temp
 
+@router.routes("/temps")
+def get_temps():
+    return list(Services.DB.temps.find().sort({"date": 1}))
 
-def start(command_queue, return_queue):
+
+def start(command_queue, response_queue):
+    global router
+    router.command_queue = command_queue
+    router.response_queue = response_queue
     while True:
-        main_loop(command_queue, return_queue)
+        main_loop()
