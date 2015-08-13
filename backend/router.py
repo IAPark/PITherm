@@ -15,7 +15,7 @@ class Router:
                 url = None
                 try:
                     url = command["url"]
-                    self.response_queue.put({"url": url, "body": self.routes[url](command["body"])})
+                    self.response_queue.put({"url": url, "body": self[url](command["body"])})
                 except KeyError:
                     print("could not handle " + str(url))
         except Empty:
