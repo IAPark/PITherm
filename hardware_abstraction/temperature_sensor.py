@@ -7,4 +7,4 @@ class TemperatureSensor:
         self.address = address
 
     def get_temp(self):
-        return self.bus.readByte(self.address)
+        return self.bus.read_byte(self.address)
