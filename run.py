@@ -2,11 +2,9 @@ from flask import Flask
 from flask import request
 app = Flask(__name__)
 
-import RPi.GPIO as GPIO
 import smbus
 
 on = False
-bus = smbus.SMBus(1)
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
