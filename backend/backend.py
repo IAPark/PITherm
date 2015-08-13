@@ -1,5 +1,5 @@
 __author__ = 'Isaac'
-from backend.router import Router
+from router import Router
 from services import Services
 from services.temp_monitor import TempMonitor
 from services.air_handler import AirHandler
