@@ -29,8 +29,8 @@ class Thermostat:
         """
         @type target_temp: int
         """
-        self.AC_target = target_temp
-        self.heat_target = target_temp
+        self.AC_target = target_temp + self.threshold
+        self.heat_target = target_temp - self.threshold
 
     def set_AC_target(self, target_temp):
         """

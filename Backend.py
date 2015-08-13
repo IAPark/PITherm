@@ -29,14 +29,21 @@ import time
 from services.thermostat import Thermostat
 Services.Thermostat = Thermostat(Services.AirHandler, 3)
 
+Services.Thermostat.set_AC_target(21)
+Services.Thermostat.set_heater_target(0)
+
+
+def centigrade_to_fahrenheit(c):
+    return c * 212/100 + 32
 
 def main_loop():
     Services.TempMonitor.check_temp()
+    print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)))
     time.sleep(30)
 
 @Services.TempMonitor.temp_changed
 def temp_change(temp):
-    print("temp now: " + str(temp))
+    print("temp changed now: " + str(centigrade_to_fahrenheit(temp)))
 
 while True:
     main_loop()
