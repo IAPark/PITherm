@@ -65,21 +65,21 @@ def remove_repeating_schedule():
 # Routes to modify the non repeating schedule
 @app.route('/schedule', methods=["GET"])
 @logged_in_route
-def get_repeating_schedule():
+def get_schedule():
     command_queue.put({"url": "/schedule/GET", "body": 0})
     return json.dumps({"data": get_for("/schedule/GET", response_queue, 5)}, default=json_util.default)
 
 
 @app.route('/schedule', methods=["POST"])
 @logged_in_route
-def add_repeating_schedule():
+def add_schedule():
     command_queue.put({"url": "/schedule/POST", "body": request.get_json()})
     return json.dumps({"data": get_for("/schedule/POST", response_queue, 5)}, default=json_util.default)
 
 
 @app.route('/schedule', methods=["DELETE"])
 @logged_in_route
-def remove_repeating_schedule():
+def remove_schedule():
     command_queue.put({"url": "/schedule/DELETE", "body": request.get_json()})
     return json.dumps({"data": get_for("/schedule/DELETE", response_queue, 5)}, default=json_util.default)
 
