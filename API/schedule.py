@@ -11,6 +11,11 @@ api = Blueprint("schedule", __name__, url_prefix='/schedule')
 @logged_in_route
 def get_schedule():
     command_queue.put({"url": request.path + request.method, "body": request.get_json()})
+    result = get_for(request.path + request.method, response_queue, 5)
+    for schedule in result:
+        schedule["start"] = schedule["start"].total_seconds()
+        schedule["end"] = schedule["start"].total_seconds()
+
     return json.dumps({"data": get_for(request.path + request.method, response_queue, 5)}, default=json_util.default)
 
 
