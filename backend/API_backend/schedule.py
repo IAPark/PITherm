@@ -18,9 +18,10 @@ def get_schedule(body):
     fan = body["state"]["fan"]
 
     services.DB.set_delayed_state_change(start, end, AC_target, heater_target, fan)
+    return {}
 
 
 @router.route("/schedule/DELETE")
 def get_schedule(body):
-    services.DB.schedule.remove({"_id": body["_id"]})
+    return services.DB.schedule.remove({"_id": body["_id"]})
 
