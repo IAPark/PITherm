@@ -45,7 +45,7 @@ class DB:
             "state": {"AC_target": AC_target, "heater_target": heater_target, "fan": fan}
 
         }
-        self.schedule.insert_one(delayed_state_change)
+        return self.schedule.insert_one(delayed_state_change)
 
     def set_repeating_state_change(self, seconds_into_week, AC_target, heater_target, fan):
         repeating_state_change = {
