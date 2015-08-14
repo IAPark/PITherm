@@ -16,7 +16,7 @@ def get_schedule():
         schedule["start"] = int(schedule["start"].strftime("%s"))
         schedule["end"] = int(schedule["end"].strftime("%s"))
 
-    return json.dumps({"data": get_for(request.path + request.method, response_queue, 5)}, default=json_util.default)
+    return json.dumps({"data": result}, default=json_util.default)
 
 
 @api.route('/', methods=["POST"])
