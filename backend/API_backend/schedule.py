@@ -3,6 +3,7 @@ from backend import router
 import services
 from datetime import datetime
 
+
 @router.route("/schedule/GET")
 def get_schedule(body):
     return list(services.DB.schedule.find())

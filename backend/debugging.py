@@ -1,4 +1,3 @@
-from ticker import default_ticker
 import services
 
 
@@ -6,7 +5,7 @@ def centigrade_to_fahrenheit(c):
     return c * 1.8000 + 32
 
 
-@default_ticker.tick
+@services.TempMonitor.temp_changed
 def print_temp():
     print("temp: " + str(centigrade_to_fahrenheit(services.TempMonitor.last_temp)) + "(F), " +
           str(services.TempMonitor.last_temp))
