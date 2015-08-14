@@ -3,9 +3,11 @@ from flask import Blueprint, request
 from security import logged_in_route
 from bson import json_util
 import json
-from API import db
-from API_to_backend import command_queue, response_queue, get_for
 api = Blueprint("schedule", __name__, url_prefix='/schedule')
+
+from services.database import DB
+db = DB()
+
 
 
 # Routes to modify the non repeating schedule
