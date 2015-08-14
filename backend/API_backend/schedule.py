@@ -13,6 +13,8 @@ def get_schedule(body):
     start = datetime.utcfromtimestamp(body["start"])
     end = datetime.utcfromtimestamp(body["end"])
 
+    print(body)
+
     AC_target = datetime["state"]["AC_target"]
     heater_target = datetime["state"]["heater_target"]
     fan = datetime["state"]["fan"]
