@@ -13,11 +13,8 @@ def get_schedule(body):
     start = datetime.utcfromtimestamp(body["start"])
     end = datetime.utcfromtimestamp(body["end"])
 
-    print(type(body))
-    print(start)
-
-    AC_target = datetime["state"]["AC_target"]
-    heater_target = datetime["state"]["heater_target"]
-    fan = datetime["state"]["fan"]
+    AC_target = body["state"]["AC_target"]
+    heater_target = body["state"]["heater_target"]
+    fan = body["state"]["fan"]
 
     services.DB.set_delayed_state_change(start, end, AC_target, heater_target, fan)
