@@ -32,7 +32,11 @@ def stop():
     func()
     return "shutting down"
 
-
+if not app.debug or True:
+    import logging
+    file_handler = logging.FileHandler("log.txt")
+    file_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(file_handler)
 
 start_backend()
 app.run(host='0.0.0.0', debug=True)
