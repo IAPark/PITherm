@@ -9,7 +9,7 @@ def get_schedule(body):
 
 
 @router.route("/schedule/POST")
-def get_schedule(body):
+def post_schedule(body):
     start = datetime.utcfromtimestamp(body["start"])
     end = datetime.utcfromtimestamp(body["end"])
 
@@ -22,6 +22,6 @@ def get_schedule(body):
 
 
 @router.route("/schedule/DELETE")
-def get_schedule(body):
+def delete_schedule(body):
     return services.DB.schedule.remove({"_id": body["_id"]})
 
