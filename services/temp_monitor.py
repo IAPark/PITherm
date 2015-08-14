@@ -1,11 +1,13 @@
 from ticker import default_ticker
 
+
 class TempMonitor:
     def __init__(self, temperature_sensor):
         self.temperature_sensor = temperature_sensor
         self.temperature_changed_listeners = []
         self.last_temp = None # any real temperature should be different
 
+        @default_ticker.tick
         def tick():
             self.check_temp()
 
