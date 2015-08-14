@@ -23,5 +23,5 @@ def post_schedule(body):
 
 @router.route("/schedule/DELETE")
 def delete_schedule(body):
-    return services.DB.schedule.remove({"_id": body["_id"]})
+    return services.DB.schedule.remove({"_id": body["_id"]["$oid"]})
 
