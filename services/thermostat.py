@@ -1,15 +1,11 @@
 # Thermostat controls the AC, Heater, and Fan
-from datetime import datetime
 
-from services.air_handler import AirHandler
-from services import Services
+import services
 from constants import *
 
-temp_monitor = Services.TempMonitor # should be set in any class that imports
 
 
 class Thermostat:
-    thermostats = []
     def __init__(self, air_handler, threshold):
         """
         @type air_handler: AirHandler
@@ -22,7 +18,9 @@ class Thermostat:
         self.heat_target = None
         self.threshold = threshold  # should be a temporary value, and should be replaced by an adaptive system
 
-        Thermostat.thermostats.append(self)  # we can't really mark a method so we will mark a class method
+        @services.TempMonitor.temp_changed
+        def temp_changed(temp):
+            self.manage(temp)
 
 
     def set_target(self, target_temp):
@@ -54,13 +52,6 @@ class Thermostat:
 
     def set_fan(self, on):
         self.air_handler.set_heater(on)
-
-
-    @staticmethod
-    @temp_monitor.temp_changed
-    def temp_changed(temp):
-        for thermostat in Thermostat.thermostats:
-            thermostat.manage(temp)
 
     def manage(self, temp):
         if (not self.AC_target is not None and self.AC) or (not self.heat_target is not None and self.heater):

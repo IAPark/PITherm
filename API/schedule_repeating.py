@@ -3,7 +3,7 @@ from security import logged_in_route
 from bson import json_util
 import json
 from API_to_backend import command_queue, response_queue, get_for
-api = Blueprint("schedule/repeating", __name__, url_prefix='/schedule')
+api = Blueprint("schedule_repeating", __name__, url_prefix='/schedule/repeating')
 
 
 # Routes to modify the repeating schedule

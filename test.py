@@ -1,9 +1,10 @@
 import datetime
+from services.thermostat import Thermostat
 
 __author__ = 'Isaac'
 from services.air_handler import AirHandler
 from services.temp_monitor import TempMonitor
-from services import Services
+import services
 
 
 class FakeTempSensor:
@@ -12,8 +13,6 @@ class FakeTempSensor:
 
     def get_temp(self):
         return self.temp
-
-
 
 def test_temp_monitor():
 
@@ -67,14 +66,9 @@ def test_thermostat():
 
     import services
     reload(services)
-    Services = services.Services
 
     sensor = FakeTempSensor()
-    Services.TempMonitor = TempMonitor(sensor)
-
-    import services.thermostat
-    reload(services.thermostat)
-    Thermostat = services.thermostat.Thermostat
+    services.TempMonitor = TempMonitor(sensor)
 
     heater = FakePin("heater")
     AC = FakePin("AC")
@@ -89,42 +83,42 @@ def test_thermostat():
 
     print("Test temp=0")
     sensor.temp = 0
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is False
 
     print("Test temp=-1")
     sensor.temp = -1
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is True
     assert fan.get() is False
     assert AC.get() is False
 
     print("Test temp=5")
     sensor.temp = 5
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is True
     assert fan.get() is False
     assert AC.get() is False
 
     print("Test temp=6")
     sensor.temp = 6
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is False
 
     print("Test temp=5")
     sensor.temp = 5
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is False
 
     print("Test temp=-1")
     sensor.temp = -1
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is True
     assert fan.get() is False
     assert AC.get() is False
@@ -133,21 +127,21 @@ def test_thermostat():
 
     print("Test temp=101")
     sensor.temp = 101
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is True
 
     print("Test temp=95")
     sensor.temp = 95
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is True
 
     print("Test temp=94")
     sensor.temp = 94
-    Services.TempMonitor.check_temp()
+    services.TempMonitor.check_temp()
     assert heater.get() is False
     assert fan.get() is False
     assert AC.get() is False
@@ -156,7 +150,7 @@ def test_thermostat():
 
 def test_database():
     sensor = FakeTempSensor()
-    Services.TempMonitor = TempMonitor(sensor)
+    services.TempMonitor = TempMonitor(sensor)
     from services.database import DB
 
 

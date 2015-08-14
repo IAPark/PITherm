@@ -1,4 +1,4 @@
 __author__ = 'Isaac'
 
-from hardware_abstraction.pin import Pin
-from hardware_abstraction.temperature_sensor import TemperatureSensor
+from pin import Pin
+from temperature_sensor import TemperatureSensor

@@ -3,9 +3,9 @@ from multiprocessing.queues import Empty
 
 
 class Router:
-    def __init__(self, response_queue, command_queue):
-        self.response_queue = response_queue
-        self.command_queue = command_queue
+    def __init__(self):
+        self.response_queue = None
+        self.command_queue = None
         self.routes = {}
 
     def handle(self):

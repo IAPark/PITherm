@@ -1,21 +1,23 @@
 __author__ = 'Isaac'
-from pymongo import MongoClient
 from datetime import datetime
-from services import Services
 
-temp_monitor = Services.TempMonitor
+from pymongo import MongoClient
+
+import services as s
 
 class DB:
     self = None
     def __init__(self):
-        if DB.self is None:
-            DB.self = self
         self.client = MongoClient()
         self.db = self.client.PITherm
         self.temps = self.db.temps
         self.states = self.db.states
         self.repeating_schedule = self.db.repeating_schedule
         self.schedule = self.db.schedule
+
+        @s.TempMonitor.temp_changed
+        def temp_changed(temp):
+            self.log_temp_change(temp)
 
     def log_temp_change(self, temp):
         """Method to be called every time the temperature changes.
@@ -68,8 +70,3 @@ class DB:
                  },
                 {"$sort": {"time_delta": 1}}
             ]).next()
-
-    @staticmethod
-    @temp_monitor.temp_changed
-    def temp_changed(temp):
-        DB.self.log_temp_change(temp)
