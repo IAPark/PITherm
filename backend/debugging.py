@@ -1,5 +1,5 @@
 from ticker import default_ticker
-from services import Services
+import services
 
 
 def centigrade_to_fahrenheit(c):
@@ -8,8 +8,8 @@ def centigrade_to_fahrenheit(c):
 
 @default_ticker.tick
 def print_temp():
-    print("temp: " + str(centigrade_to_fahrenheit(Services.TempMonitor.last_temp)) + "(F), " +
-          str(Services.TempMonitor.last_temp))
+    print("temp: " + str(centigrade_to_fahrenheit(services.TempMonitor.last_temp)) + "(F), " +
+          str(services.TempMonitor.last_temp))
 
 
 class FakePin:
