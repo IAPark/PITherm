@@ -1,6 +1,6 @@
 from multiprocessing import Queue, Process
 import time
-from backend import backend
+import backend
 command_queue = Queue()
 response_queue = Queue()
 
