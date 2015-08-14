@@ -1,5 +1,3 @@
-from time import sleep
-
 from backend.router import Router
 from ticker import default_ticker
 import services
@@ -24,4 +22,3 @@ def start(command_queue, response_queue):
     while True:
         default_ticker.tick_all()
         router.handle()
-        sleep(1)

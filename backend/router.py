@@ -10,7 +10,7 @@ class Router:
 
     def handle(self):
         try:
-            command = self.command_queue.get(block=False)
+            command = self.command_queue.get(timeout=1)
             if command is not None:
                 url = None
                 try:
