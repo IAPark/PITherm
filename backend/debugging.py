@@ -6,9 +6,9 @@ def centigrade_to_fahrenheit(c):
 
 
 @services.TempMonitor.temp_changed
-def print_temp():
-    print("temp: " + str(centigrade_to_fahrenheit(services.TempMonitor.last_temp)) + "(F), " +
-          str(services.TempMonitor.last_temp))
+def print_temp(temp):
+    print("temp: " + str(centigrade_to_fahrenheit(temp)) + "(F), " +
+          str(temp))
 
 
 class FakePin:
