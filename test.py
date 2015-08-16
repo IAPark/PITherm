@@ -1,4 +1,5 @@
 import datetime
+from database.state_change import StateChange
 from services.thermostat import Thermostat
 
 __author__ = 'Isaac'
@@ -14,17 +15,19 @@ class FakeTempSensor:
     def get_temp(self):
         return self.temp
 
-def test_temp_monitor():
 
+def test_temp_monitor():
     sensor = FakeTempSensor()
     temp_monitor = TempMonitor(sensor)
 
     global temp
     temp = -1
+
     @temp_monitor.temp_changed
     def listener(temperature):
         global temp
         temp = temperature
+
     temp_monitor.check_temp()
 
     assert temp == 0  # temp should have been set by the listener
@@ -43,9 +46,9 @@ def test_temp_monitor():
 
     print("temp_monitor passed")
 
+
 def test_thermostat():
     class FakePin:
-
         def __init__(self, name):
             self.name = name
             self.state = False
@@ -55,7 +58,6 @@ def test_thermostat():
 
         def set(self, state):
             self.state = state
-
 
         def get(self):
             return self.state
@@ -74,7 +76,7 @@ def test_thermostat():
     AC = FakePin("AC")
     fan = FakePin("fan")
 
-    thermostat = Thermostat(AirHandler(fan, heater, AC, FakeDB()), 5)
+    thermostat = Thermostat(AirHandler(fan, heater, AC), 5)
 
     thermostat.heat_target = 0
     thermostat.AC_target = 100
@@ -148,49 +150,103 @@ def test_thermostat():
 
     print("Thermostat passed")
 
-def test_database():
+def test_repeating_schedule():
+    from database.state_change_repeating import StateChangeRepeating
+    from database import repeating_schedule
+
+    repeating_schedule.remove()
+
+    now = datetime.datetime(2017, 1, 2, 0)
+    StateChangeRepeating(10 * 60 ** 2, 10, 100, False).save()
+    StateChangeRepeating(10 * 60 ** 2 + 1, 10, 100, True).save()
+
+    assert StateChangeRepeating.get_current(now).fan is True
+    repeating_schedule.remove()
+
+    now = datetime.datetime(2017, 1, 2, 0)
+    StateChangeRepeating(7 * 24 * 60 ** 2 - 1, 10, 100, False).save()
+    StateChangeRepeating(0, 10, 100, True).save()
+    assert StateChangeRepeating.get_current(now).fan is True
+    repeating_schedule.remove()
+
+    now = datetime.datetime(2017, 1, 2, 1)
+    StateChangeRepeating(7 * 24 * 60 ** 2 + 1, 10, 100, False).save()
+    StateChangeRepeating(60*60+1, 10, 100, True).save()
+    assert StateChangeRepeating.get_current(now).fan is False
+    repeating_schedule.remove()
+
+    now = datetime.datetime(2017, 1, 2, 0)
+    StateChangeRepeating(7 * 24 * 60 ** 2, 10, 100, False).save()
+    StateChangeRepeating(1, 10, 100, True).save()
+    assert StateChangeRepeating.get_current(now).fan is False
+    repeating_schedule.remove()
+
+    print("repeating schedule passed")
+
+def test_schedule():
+    from database import schedule
+    start = datetime.datetime(2017, 1, 1, 1)
+    end = datetime.datetime(2017, 1, 2, 1)
+    StateChange(start, end, 0, 0, True).save()
+
+    start = datetime.datetime(2017, 1, 2, 1)
+    end = datetime.datetime(2017, 1, 2, 1)
+    StateChange(start, end, 0, 0, False).save()
+
+    now = datetime.datetime(2017, 1, 1, 1)
+    assert StateChange.get_current(now).fan is True
+    schedule.remove()
+
+    start = datetime.datetime(2017, 1, 2, 1)
+    end = datetime.datetime(2017, 1, 2, 1)
+    StateChange(start, end, 0, 0, False).save()
+
+    start = datetime.datetime(2017, 1, 1, 1)
+    end = datetime.datetime(2017, 1, 2, 1)
+    StateChange(start, end, 0, 0, True).save()
+
+    now = datetime.datetime(2017, 1,  1, 1)
+    assert StateChange.get_current(now).fan is True
+    schedule.remove()
+    print("schedule passed")
+
+
+def test_temp_log():
     sensor = FakeTempSensor()
     services.TempMonitor = TempMonitor(sensor)
-    from services.database import DB
+    from database import temps
+    temps.remove()
+    from database.temp_log import TempLog
+    sensor.temp = 12
+    services.TempMonitor.check_temp()
+
+    assert TempLog.get_all()[0].temp == 12
+
+    sensor.temp = 3
+    services.TempMonitor.check_temp()
+
+    assert TempLog.get_all()[0].temp == 12
+    assert TempLog.get_all()[1].temp == 3
+    print("temp log passed")
 
 
-
-    db = DB()
-
-    db.repeating_schedule.remove()
-
-    now = datetime.datetime(2017, 1, 2, 0)
-    db.set_repeating_state_change(10*60**2, 10, 100, False)
-    db.set_repeating_state_change(10*60**2 + 1, 10, 100, True)
-
-    print(db.get_repeating_change(now))
-    assert db.get_repeating_change(now)["time_delta"] == (-10*60**2 - 1) % (7*24*60**2)
-    assert db.get_repeating_change(now)["state"]["fan"] is True
-    db.repeating_schedule.remove()
-
-    now = datetime.datetime(2017, 1, 2, 0)
-    db.set_repeating_state_change(7*24*60**2-1, 10, 100, False)
-    db.set_repeating_state_change(0, 10, 100, True)
-    assert db.get_repeating_change(now)["state"]["fan"] is True
-    db.repeating_schedule.remove()
-
-    now = datetime.datetime(2017, 1, 2, 0)
-    db.set_repeating_state_change(7*24*60**2, 10, 100, False)
-    db.set_repeating_state_change(1, 10, 100, True)
-    assert db.get_repeating_change(now)["state"]["fan"] is False
-    db.repeating_schedule.remove()
-
-
-    now = datetime.datetime(2017, 1, 2, 0)
-    db.set_repeating_state_change(7*24*60**2, 10, 100, False)
-    db.set_repeating_state_change(1, 10, 100, True)
-    assert db.get_repeating_change(now)["state"]["fan"] is False
-    db.repeating_schedule.remove()
-
+def test_state_log():
+    sensor = FakeTempSensor()
+    services.TempMonitor = TempMonitor(sensor)
+    from database import states
+    states.remove()
+    from database.state_log import StateLog
+    now = datetime.datetime(2017, 1,  1, 1)
+    StateLog(now, False, False, False).save()
+    assert StateLog.get_all()[0].fan is False
+    print("state log passed")
 
 
 
 
 test_temp_monitor()
 test_thermostat()
-test_database()
+test_repeating_schedule()
+test_schedule()
+test_temp_log()
+test_state_log()

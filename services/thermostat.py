@@ -2,7 +2,8 @@
 
 import services
 from constants import *
-
+from database.state_change import StateChange
+from database.state_change_repeating import StateChangeRepeating
 
 
 class Thermostat:
@@ -69,16 +70,13 @@ class Thermostat:
 
 
     def tick(self, now):
-        db = Services.DB
-        scheduled = db.get_scheduled_state(now)
+        scheduled = StateChange.get_current(now)
 
         if scheduled is None:
-            state = db.get_repeating_change(now)["state"]
-        else:
-            state = scheduled["state"]
+            scheduled = StateChangeRepeating.get_current(now)
 
-        self.set_AC_target(state["AC_target"])
-        self.set_fan(state["fan"])
-        self.set_heater_target(state["heater_target"])
+        self.set_AC_target(scheduled.AC_target)
+        self.set_fan(scheduled.fan)
+        self.set_heater_target(scheduled.heater_target)
 
 

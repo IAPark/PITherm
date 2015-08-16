@@ -1,6 +1,6 @@
 from backend import router
 import services
-
+from database.temp_log import TempLog
 
 @router.route("/temp")
 def get_temp(body):
@@ -9,4 +9,4 @@ def get_temp(body):
 
 @router.route("/temps")
 def get_temps(body):
-    return list(services.DB.temps.find().sort([("date", 1)]))
+    return TempLog.get_all()
