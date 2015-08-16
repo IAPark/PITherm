@@ -181,6 +181,22 @@ def test_repeating_schedule():
     assert StateChangeRepeating.get_current(now).fan is False
     repeating_schedule.remove()
 
+
+    id = StateChangeRepeating(1, 10, 100, True).save()
+
+    to_remove = StateChangeRepeating.from_dictionary({
+      "week_time": 1430,
+      "state": {
+        "heater_target": 20,
+        "AC_target": 36,
+        "fan": False
+      },
+      "_id": id
+    })
+
+    assert repeating_schedule.remove({"_id": to_remove.id})["n"] == 1
+
+
     print("repeating schedule passed")
 
 def test_schedule():

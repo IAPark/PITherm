@@ -3,7 +3,7 @@ from security import logged_in_route
 from bson import json_util
 import json
 from database.state_change_repeating import StateChangeRepeating
-from database import schedule
+from database import repeating_schedule
 api = Blueprint("schedule_repeating", __name__, url_prefix='/schedule/repeating')
 
 
@@ -26,6 +26,5 @@ def add_schedule():
 @logged_in_route
 def remove_schedule():
     to_remove = StateChangeRepeating.from_dictionary(request.get_json(force=True))
-    result = schedule.remove({"_id": to_remove.id})
-    print(to_remove.id)
+    result = repeating_schedule.remove({"_id": to_remove.id})
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')

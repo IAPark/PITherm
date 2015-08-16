@@ -29,7 +29,7 @@ class StateChangeRepeating(StateChange):
         fan = json["state"]["fan"]
 
         try:
-            id = json["_id"]["$oid"]
+            id = ObjectId(json["_id"]["$oid"])
         except KeyError:
             id = None
         except TypeError:
