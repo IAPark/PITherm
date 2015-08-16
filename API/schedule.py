@@ -27,5 +27,6 @@ def add_schedule():
 @logged_in_route
 def remove_schedule():
     to_remove = StateChange.from_dictionary(request.get_json(force=True))
+    print(to_remove.id)
     result = schedule.remove({"_id": to_remove.id})
     return json.dumps({"data": result}, default=json_util.default)
