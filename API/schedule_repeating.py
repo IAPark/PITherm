@@ -27,4 +27,5 @@ def add_schedule():
 def remove_schedule():
     to_remove = StateChangeRepeating.from_dictionary(request.get_json(force=True))
     result = schedule.remove({"_id": to_remove.id})
+    print(to_remove.id)
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
