@@ -57,6 +57,14 @@ class TempLog:
 
         return temp_changes
 
+    @classmethod
+    def get_all_dic(cls):
+        all_items = cls.get_all()
+        result = []
+        for item in all_items:
+            result.append(item.to_dictionary())
+        return result
+
 
 @services.TempMonitor.temp_changed
 def on_temp_change(temp):

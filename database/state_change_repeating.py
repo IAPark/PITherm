@@ -71,3 +71,11 @@ class StateChangeRepeating(StateChange):
                 "state": {"AC_target": self.AC_target,
                           "heater_target": self.heater_target,
                           "fan": self.fan}}
+
+    @classmethod
+    def get_all_dic(cls):
+        all_items = cls.get_all()
+        result = []
+        for item in all_items:
+            result.append(item.to_dictionary())
+        return result

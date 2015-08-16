@@ -1,6 +1,7 @@
 from datetime import datetime
 from database.state_log import StateLog
 
+
 class AirHandler:
     def __init__(self, fan_pin, heater_pin, AC_pin):
         self.fan_pin = fan_pin

@@ -61,3 +61,12 @@ class StateLog:
             state_changes.append(cls.from_dictionary(result))
 
         return state_changes
+
+
+    @classmethod
+    def get_all_dic(cls):
+        all_items = cls.get_all()
+        result = []
+        for item in all_items:
+            result.append(item.to_dictionary())
+        return result
