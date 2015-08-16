@@ -18,7 +18,12 @@ def get_schedule_repeating():
 @api.route('/', methods=["POST"])
 @logged_in_route
 def add_schedule_repeating():
-    result = StateChangeRepeating.from_dictionary(request.get_json(force=True)).save()
+    print("in function")
+    json = request.get_json(force=True)
+    print(json)
+    result = StateChangeRepeating.from_dictionary(json)
+    print(result)
+    result = result.save()
     print(result)
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
 
