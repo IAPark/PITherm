@@ -21,9 +21,12 @@ class StateChange:
 
     @classmethod
     def from_dictionary(cls, json):
-        start = datetime.utcfromtimestamp(json["start"])
-        end = datetime.utcfromtimestamp(json["end"])
-
+        start = json["start"]
+        if type(start) is not datetime:
+            start = datetime.utcfromtimestamp(json["start"])
+        end = json["end"]
+        if type(end) is not datetime:
+            end = datetime.utcfromtimestamp(json["end"])
         AC_target = json["state"]["AC_target"]
         heater_target = json["state"]["heater_target"]
         fan = json["state"]["fan"]
