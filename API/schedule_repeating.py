@@ -21,7 +21,7 @@ def add_schedule_repeating():
     print("in function")
     print(request.mimetype)
     print(request.data)
-    json = request.get_json(force=True)
+    json = request.json
     print(json)
     result = StateChangeRepeating.from_dictionary(json)
     print(result)
