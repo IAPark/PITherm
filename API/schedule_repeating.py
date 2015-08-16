@@ -20,6 +20,7 @@ def get_schedule():
 @logged_in_route
 def add_schedule():
     result = StateChangeRepeating.from_dictionary(request.get_json(force=True)).save()
+    print(result)
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
 
 
@@ -27,6 +28,5 @@ def add_schedule():
 @logged_in_route
 def remove_schedule():
     to_remove = StateChangeRepeating.from_dictionary(request.get_json(force=True))
-    print(to_remove.id)
     result = schedule.remove({"_id": to_remove.id})
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
