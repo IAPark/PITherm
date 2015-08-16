@@ -1,4 +1,3 @@
-from datetime import datetime
 from flask import Blueprint, request, Response
 from security import logged_in_route
 from bson import json_util
@@ -11,14 +10,14 @@ api = Blueprint("schedule_repeating", __name__, url_prefix='/schedule/repeating'
 # Routes to modify the non repeating schedule
 @api.route('/', methods=["GET"])
 @logged_in_route
-def get_schedule():
+def get_schedule_repeating():
     result = StateChangeRepeating.get_all_dic()
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
 
 
 @api.route('/', methods=["POST"])
 @logged_in_route
-def add_schedule():
+def add_schedule_repeating():
     result = StateChangeRepeating.from_dictionary(request.get_json(force=True)).save()
     print(result)
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
@@ -26,7 +25,7 @@ def add_schedule():
 
 @api.route('/', methods=["DELETE"])
 @logged_in_route
-def remove_schedule():
+def remove_schedule_repeating():
     to_remove = StateChangeRepeating.from_dictionary(request.get_json(force=True))
     result = schedule.remove({"_id": to_remove.id})
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
