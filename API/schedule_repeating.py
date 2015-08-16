@@ -5,7 +5,7 @@ from bson import json_util
 import json
 from database.state_change_repeating import StateChangeRepeating
 from database import schedule
-api = Blueprint("schedule", __name__, url_prefix='/schedule/repeating')
+api = Blueprint("schedule_repeating", __name__, url_prefix='/schedule/repeating')
 
 
 # Routes to modify the non repeating schedule
