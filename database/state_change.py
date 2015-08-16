@@ -75,7 +75,7 @@ class StateChange:
     def to_dictionary(self):
         return {"start": int(self.start.strftime("%s")),
                 "end": int(self.end.strftime("%s")),
-                "_id": self.id,
+                "_id": str(self.id),
                 "state": {"AC_target": self.AC_target,
                           "heater_target": self.heater_target,
                           "fan": self.fan}}

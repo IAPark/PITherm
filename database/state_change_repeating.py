@@ -67,7 +67,7 @@ class StateChangeRepeating(StateChange):
 
     def to_dictionary(self):
         return {"week_time": self.seconds_into_week,
-                "_id": self.id,
+                "_id": str(self.id),
                 "state": {"AC_target": self.AC_target,
                           "heater_target": self.heater_target,
                           "fan": self.fan}}

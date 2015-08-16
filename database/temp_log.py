@@ -47,7 +47,7 @@ class TempLog:
 
     def to_dictionary(self):
         return {"date": int(self.date.strftime("%s")),
-                "_id": self.id,
+                "_id": str(self.id),
                 "temp": self.temp}
 
     @classmethod

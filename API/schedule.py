@@ -26,6 +26,6 @@ def add_schedule():
 @api.route('/', methods=["DELETE"])
 @logged_in_route
 def remove_schedule():
-    to_remove = request.get_json(force=True)
-    result = schedule.remove({"_id": to_remove["_id"]})
+    to_remove = StateChange.from_dictionary(request.get_json(force=True))
+    result = schedule.remove({"_id": to_remove.id})
     return json.dumps({"data": result}, default=json_util.default)

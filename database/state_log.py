@@ -52,7 +52,7 @@ class StateLog:
 
     def to_dictionary(self):
         return {"date": int(self.date.strftime("%s")),
-                "_id": self.id,
+                "_id": str(self.id),
                 "state": {"AC": self.AC, "heater": self.heater, "fan": self.fan}}
 
     @classmethod
