@@ -12,7 +12,7 @@ api = Blueprint("schedule", __name__, url_prefix='/schedule')
 @api.route('/', methods=["GET"])
 @logged_in_route
 def get_schedule():
-    result = StateChange.get_all()
+    result = StateChange.get_all_dic()
     return json.dumps({"data": result}, default=json_util.default)
 
 
