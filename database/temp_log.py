@@ -35,10 +35,12 @@ class TempLog:
 
         try:
             id = json["_id"]["$oid"]
+        except KeyError:
+            id = None
         except TypeError:
             try:
                 id = json["_id"]
-            except KeyError:
+            except:
                 id = None
 
         return cls(date, temp, id=id)
