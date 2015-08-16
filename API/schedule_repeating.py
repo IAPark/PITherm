@@ -19,6 +19,8 @@ def get_schedule_repeating():
 @logged_in_route
 def add_schedule_repeating():
     print("in function")
+    print(request.mimetype)
+    print(request.data)
     json = request.get_json(force=True)
     print(json)
     result = StateChangeRepeating.from_dictionary(json)
