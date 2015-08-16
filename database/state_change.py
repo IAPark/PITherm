@@ -1,4 +1,5 @@
 from datetime import datetime
+from bson import ObjectId
 from database import schedule
 from calendar import timegm
 
@@ -37,7 +38,7 @@ class StateChange:
             id = None
         except TypeError:
             try:
-                id = json["_id"]
+                id = ObjectId(json["_id"])
             except:
                 id = None
 

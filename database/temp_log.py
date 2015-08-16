@@ -1,4 +1,5 @@
 from datetime import datetime
+from bson import ObjectId
 from database import temps
 import services
 
@@ -39,7 +40,7 @@ class TempLog:
             id = None
         except TypeError:
             try:
-                id = json["_id"]
+                id = ObjectId(json["_id"])
             except:
                 id = None
 
