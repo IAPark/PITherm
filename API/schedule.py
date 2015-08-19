@@ -1,11 +1,12 @@
-from datetime import datetime
 from flask import Blueprint, request, Response
+from flask.ext.cors import CORS
 from security import logged_in_route
 from bson import json_util
 import json
 from database.state_change import StateChange
 from database import schedule
 api = Blueprint("schedule", __name__, url_prefix='/schedule')
+CORS(api)
 
 
 # Routes to modify the non repeating schedule

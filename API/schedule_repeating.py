@@ -4,8 +4,9 @@ from bson import json_util
 import json
 from database.state_change_repeating import StateChangeRepeating
 from database import repeating_schedule
+from flask.ext.cors import CORS
 api = Blueprint("schedule_repeating", __name__, url_prefix='/schedule/repeating')
-
+CORS(api)
 
 # Routes to modify the non repeating schedule
 @api.route('/', methods=["GET"])
@@ -27,4 +28,4 @@ def add_schedule():
 def remove_schedule():
     to_remove = StateChangeRepeating.from_dictionary(request.get_json(force=True))
     result = repeating_schedule.remove({"_id": to_remove.id})
-    return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
+    return Response(json.dumps({"data": result}, default=json_util.default), {'Access-Control-Allow-Origin': '*'} , mimetype='application/json')
