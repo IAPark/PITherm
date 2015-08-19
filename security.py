@@ -17,9 +17,12 @@ class User:
 
 def valid_user(username, password):
     user = users.find_one({"username": username})
+    if user is None:
+        return False
+
     if not user["password"] == password:
-        return None
-    return user
+        return False
+    return True
 
 
 bad_auth_message = Response(
