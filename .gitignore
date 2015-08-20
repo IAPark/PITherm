@@ -58,3 +58,7 @@ target/
 
 #pycharm
 .idea/**
+
+#ssl keys
+ia.crt
+ia.key

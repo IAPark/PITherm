@@ -7,7 +7,11 @@ from API import app
 from security import logged_in_route
 from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
+from OpenSSL import SSL
 
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('ia.key')
+context.use_certificate_file('ia.crt')
 
 @app.route('/temp')
 @logged_in_route
@@ -39,6 +43,6 @@ if not app.debug or True:
     app.logger.addHandler(file_handler)
 
 start_backend()
-app.run(host='0.0.0.0', debug=True)
+app.run(host='0.0.0.0', debug=True, ssl_context=context)
 Pin.cleanup()
 
