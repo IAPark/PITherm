@@ -1,13 +1,10 @@
 from functools import wraps
 import json
 from pymongo import MongoClient
-
-__author__ = 'Isaac'
 from flask import request, Response
 
 client = MongoClient()
 users = client.PITherm.users
-
 
 class User:
     def __init__(self, username, password):
@@ -28,7 +25,7 @@ def valid_user(username, password):
 bad_auth_message = Response(
     json.dumps({"error": ["bad login"]}), 401)
 
-
+# Thanks to Armin Ronacher and his example at http://flask.pocoo.org/snippets/8/
 def logged_in_route(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
