@@ -7,11 +7,10 @@ from API import app
 from security import logged_in_route
 from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
-from OpenSSL import SSL
+import ssl
 
-context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('ia.key')
-context.use_certificate_file('ia.crt')
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('ia.crt', 'ia.key')
 
 @app.route('/temp')
 @logged_in_route
