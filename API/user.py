@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, Response
 from security import logged_in_route
 from bson import json_util
 import json
@@ -8,7 +8,7 @@ CORS(api)
 
 
 # Login
-@api.route('/login', methods=["GET"])
+@api.route('/login')
 @logged_in_route
 def login():
     return Response(json.dumps({"data": "logged in"}, default=json_util.default), mimetype='application/json')
