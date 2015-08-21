@@ -8,7 +8,7 @@ CORS(api)
 
 
 # Login
-@api.route('/login')
+@api.route('/')
 @logged_in_route
 def login():
     return Response(json.dumps({"data": "logged in"}, default=json_util.default), mimetype='application/json')
