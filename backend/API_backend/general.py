@@ -9,4 +9,4 @@ def get_temp(body):
 
 @router.route("/temps")
 def get_temps(body):
-    return TempLog.get_all()
+    return TempLog.get_all_dic()
