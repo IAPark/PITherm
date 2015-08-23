@@ -68,7 +68,7 @@ class TempLog:
             result.append(item.to_dictionary())
         return result
 
-
-@services.TempMonitor.temp_changed
-def on_temp_change(temp):
-    TempLog(datetime.utcnow(), temp).save()
+if services.TempMonitor is not None:
+    @services.TempMonitor.temp_changed
+    def on_temp_change(temp):
+        TempLog(datetime.utcnow(), temp).save()
