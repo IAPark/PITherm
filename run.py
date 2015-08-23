@@ -5,6 +5,7 @@ from flask import request, Response
 from flask.ext.cors import CORS
 
 from API import app
+from database.temp_log import TempLog
 from security import logged_in_route
 from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
@@ -19,8 +20,7 @@ def get_temp():
 
 @app.route('/temps')
 def get_temps():
-    command_queue.put({"url": "/temps", "body": 0})
-    return Response(json.dumps({"data": get_for("/temps", response_queue, 5)}, default=json_util.default), mimetype='application/json')
+    return Response(json.dumps({"data": TempLog.get_all_dic()}, default=json_util.default), mimetype='application/json')
 
 
 @app.route('/stop')
