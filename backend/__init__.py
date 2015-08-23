@@ -6,6 +6,7 @@ from hardware_abstraction import TemperatureSensor, Pin
 
 services.TempMonitor = TempMonitor(TemperatureSensor(0x48))
 from database import temp_log
+reload(temp_log)
 from services.air_handler import AirHandler
 from debugging import FakePin
 services.AirHandler = AirHandler(AC_pin=Pin(4), fan_pin=FakePin("fan"), heater_pin=FakePin("heater"))
