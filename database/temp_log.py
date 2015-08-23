@@ -69,7 +69,6 @@ class TempLog:
         return result
 
 if services.TempMonitor is not None:
-    print("TempMonitor exists")
     @services.TempMonitor.temp_changed
     def on_temp_change(temp):
         TempLog(datetime.utcnow(), temp).save()
