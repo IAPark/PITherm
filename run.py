@@ -2,21 +2,22 @@ import json
 
 from bson import json_util
 from flask import request
+from flask.ext.cors import CORS
 
 from API import app
 from security import logged_in_route
 from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
+CORS(app)
+
 
 @app.route('/temp')
-@logged_in_route
 def get_temp():
     command_queue.put({"url": "/temp", "body": 0})
     return str(get_for("/temp", response_queue, 5))
 
 
 @app.route('/temps')
-@logged_in_route
 def get_temps():
     command_queue.put({"url": "/temps", "body": 0})
     return json.dumps({"data": get_for("/temps", response_queue, 5)}, default=json_util.default)
