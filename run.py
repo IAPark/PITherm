@@ -1,7 +1,7 @@
 import json
 
 from bson import json_util
-from flask import request
+from flask import request, Response
 from flask.ext.cors import CORS
 
 from API import app
@@ -14,13 +14,13 @@ CORS(app)
 @app.route('/temp')
 def get_temp():
     command_queue.put({"url": "/temp", "body": 0})
-    return str(get_for("/temp", response_queue, 5))
+    return Response(json.dumps({"data": str(get_for("/temp", response_queue, 5))}, default=json_util.default), mimetype='application/json')
 
 
 @app.route('/temps')
 def get_temps():
     command_queue.put({"url": "/temps", "body": 0})
-    return json.dumps({"data": get_for("/temps", response_queue, 5)}, default=json_util.default)
+    return Response(json.dumps({"data": get_for("/temps", response_queue, 5)}, default=json_util.default), mimetype='application/json')
 
 
 @app.route('/stop')
