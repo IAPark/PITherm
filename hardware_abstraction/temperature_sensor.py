@@ -3,6 +3,7 @@ import smbus
 
 class TemperatureSensor:
     temp_history = []
+    last_temp = 0
 
     def __init__(self, address):
         self.bus = smbus.SMBus(1)
@@ -16,19 +17,15 @@ class TemperatureSensor:
         result = temp
 
         # smooth the data slightly
-        if len(self.temp_history) > 0:
-            if self.temp_history[0] - temp < 0.3:
-                if len(self.temp_history) > 1:
-                    if self.temp_history[1] - temp < 0.3:
-                        if len(self.temp_history) > 2:
-                            if not self.temp_history[2] - temp < 0.3:
-                                result = self.temp_history[2]
-                    else:
-                        result = self.temp_history[0]
-            else:
-                result = self.temp_history[0]
+        history_length = 3
+
+        for t in self.temp_history:
+            if abs(t - temp) > 0.2:
+                result = self.last_temp
+                break
 
         self.temp_history.append(temp)
-        self.temp_history = self.temp_history[0:3]
+        self.temp_history = self.temp_history[0:history_length]
+        self.last_temp = result
 
         return result
