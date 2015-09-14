@@ -17,6 +17,7 @@ from API_backend import general
 
 
 def start(command_queue, response_queue):
+    print("started backend")
     router.command_queue = command_queue
     router.response_queue = response_queue
     while True:
