@@ -6,8 +6,6 @@ response_queue = Queue()
 
 
 def start_backend():
-    if handler:
-        handler.stop()
     handler = Process(target=backend.start, args=(command_queue, response_queue))
     handler.start()
 
