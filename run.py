@@ -11,6 +11,7 @@ from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
 CORS(app)
 
+print("run loaded")
 
 @app.route('/temp')
 def get_temp():
