@@ -33,10 +33,10 @@ A script to monitor temperature changes and schedule changes and based on these 
 
 
 ## ForcedAirController
-A script to actual control the air handling system
+A script to actually control the air handling system
 
 ### API
 
 * POST ac/:on_or_off Sets ac to on_or_off
 * POST heater:on_or_off Sets Heater to on_or_off
-* POST fan/on_or_off Sets fan to on_or_off by default
+* POST fan/:on_or_off Sets fan to on_or_off by default
