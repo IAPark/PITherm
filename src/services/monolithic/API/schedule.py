@@ -4,7 +4,7 @@ from flask import Blueprint, request, Response
 from flask.ext.cors import CORS
 from bson import json_util
 
-from security import logged_in_route
+from src.services.monolithic.services import logged_in_route
 from src.services.database import StateChange
 from src.services.database import schedule
 

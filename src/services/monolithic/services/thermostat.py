@@ -1,7 +1,6 @@
 # Thermostat controls the AC, Heater, and Fan
 
 from src.services import services
-from constants import *
 from src.services.database import StateChange
 from src.services.database import StateChangeRepeating
 

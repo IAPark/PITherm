@@ -3,7 +3,7 @@ from datetime import datetime
 from bson import ObjectId
 
 from src.services.database import temps
-import services
+from src.services.monolithic import services
 
 
 class TempLog:

@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-from constants import *
 
 
 class Pin:

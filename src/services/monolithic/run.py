@@ -6,7 +6,7 @@ from flask.ext.cors import CORS
 
 from API import app
 from src.services.database.temp_log import TempLog
-from security import logged_in_route
+from services.monolithic.security import logged_in_route
 from hardware_abstraction import Pin
 from API_to_backend import response_queue, command_queue, start_backend, get_for
 CORS(app)

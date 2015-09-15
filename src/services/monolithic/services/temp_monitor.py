@@ -1,4 +1,4 @@
-from ticker import default_ticker
+from src.services.monolithic.services import default_ticker
 
 
 class TempMonitor:

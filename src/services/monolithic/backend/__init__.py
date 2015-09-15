@@ -1,5 +1,5 @@
 from src.services.backend import Router
-from ticker import default_ticker
+from src.services.monolithic.services import default_ticker
 from src.services import services
 from src.services.services.temp_monitor import TempMonitor
 from src.services.hardware_abstraction import TemperatureSensor, Pin
