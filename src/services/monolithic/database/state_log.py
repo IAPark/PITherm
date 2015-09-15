@@ -1,6 +1,8 @@
 from datetime import datetime
+
 from bson import ObjectId
-from database import states
+
+from src.services.database import states
 
 
 class StateLog:

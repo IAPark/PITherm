@@ -1,6 +1,6 @@
-from backend import router
-import services
-from database.temp_log import TempLog
+from src.services.backend import router
+from src.services import services
+
 
 @router.route("/temp")
 def get_temp(body):

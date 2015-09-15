@@ -1,7 +1,10 @@
 from datetime import datetime
-from bson import ObjectId
-from database import schedule
 from calendar import timegm
+
+from bson import ObjectId
+
+from src.services.database import schedule
+
 
 class StateChange:
     collection = schedule

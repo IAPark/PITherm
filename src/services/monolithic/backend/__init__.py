@@ -1,13 +1,14 @@
-from backend.router import Router
+from src.services.backend import Router
 from ticker import default_ticker
-import services
-from services.temp_monitor import TempMonitor
-from hardware_abstraction import TemperatureSensor, Pin
+from src.services import services
+from src.services.services.temp_monitor import TempMonitor
+from src.services.hardware_abstraction import TemperatureSensor, Pin
 
 services.TempMonitor = TempMonitor(TemperatureSensor(0x48))
-from database import temp_log
+from src.services.database import temp_log
+
 reload(temp_log)
-from services.air_handler import AirHandler
+from src.services.services.air_handler import AirHandler
 from debugging import FakePin
 services.AirHandler = AirHandler(AC_pin=Pin(4), fan_pin=FakePin("fan"), heater_pin=FakePin("heater"))
 

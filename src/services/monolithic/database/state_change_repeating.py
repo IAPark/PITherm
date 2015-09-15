@@ -1,8 +1,7 @@
-from datetime import datetime
-import calendar
 from bson import ObjectId
-from database import repeating_schedule
-from database.state_change import StateChange
+
+from src.services.database import repeating_schedule
+from src.services.database import StateChange
 
 
 class StateChangeRepeating(StateChange):

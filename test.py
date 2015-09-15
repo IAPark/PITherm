@@ -1,11 +1,12 @@
 import datetime
+
 from database.state_change import StateChange
 from services.thermostat import Thermostat
 
 __author__ = 'Isaac'
-from services.air_handler import AirHandler
-from services.temp_monitor import TempMonitor
-import services
+from src.services.services.air_handler import AirHandler
+from src.services.services.temp_monitor import TempMonitor
+from src.services import services
 
 
 class FakeTempSensor:
@@ -66,7 +67,6 @@ def test_thermostat():
         def log_air_handler_state(self, AC, heater, fan):
             return
 
-    import services
     reload(services)
 
     sensor = FakeTempSensor()
@@ -151,8 +151,8 @@ def test_thermostat():
     print("Thermostat passed")
 
 def test_repeating_schedule():
-    from database.state_change_repeating import StateChangeRepeating
-    from database import repeating_schedule
+    from src.services.database import StateChangeRepeating
+    from src.services.database import repeating_schedule
 
     repeating_schedule.remove()
 
@@ -200,7 +200,7 @@ def test_repeating_schedule():
     print("repeating schedule passed")
 
 def test_schedule():
-    from database import schedule
+    from src.services.database import schedule
     start = datetime.datetime(2017, 1, 1, 1)
     end = datetime.datetime(2017, 1, 2, 1)
     StateChange(start, end, 0, 0, True).save()
@@ -230,9 +230,9 @@ def test_schedule():
 def test_temp_log():
     sensor = FakeTempSensor()
     services.TempMonitor = TempMonitor(sensor)
-    from database import temps
+    from src.services.database import temps
     temps.remove()
-    from database.temp_log import TempLog
+    from src.services.database.temp_log import TempLog
     sensor.temp = 12
     services.TempMonitor.check_temp()
 
@@ -249,9 +249,9 @@ def test_temp_log():
 def test_state_log():
     sensor = FakeTempSensor()
     services.TempMonitor = TempMonitor(sensor)
-    from database import states
+    from src.services.database import states
     states.remove()
-    from database.state_log import StateLog
+    from src.services.database.state_log import StateLog
     now = datetime.datetime(2017, 1,  1, 1)
     StateLog(now, False, False, False).save()
     assert StateLog.get_all()[0].fan is False
