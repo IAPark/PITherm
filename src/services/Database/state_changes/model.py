@@ -6,8 +6,10 @@ from pymongo import MongoClient
 client = MongoClient()
 db = client.PITherm
 
+
 def remove(to_remove):
     return db.state_changes.remove({"_id": to_remove})
+
 
 class StateChange:
     collection = db.state_changes
@@ -67,7 +69,6 @@ class StateChange:
 
         return state_changes
 
-
     def save(self):
         delayed_state_change = {
             "start": self.start,
@@ -80,8 +81,8 @@ class StateChange:
         return self.collection.save(delayed_state_change)
 
     def to_dictionary(self):
-        return {"start": int(self.start.strftime("%s")),
-                "end": int(self.end.strftime("%s")),
+        return {"start": int((self.start-datetime(1970,1,1)).total_seconds()),
+                "end": int((self.end-datetime(1970,1,1)).total_seconds()),
                 "_id": str(self.id),
                 "state": {"AC_target": self.AC_target,
                           "heater_target": self.heater_target,
