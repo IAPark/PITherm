@@ -26,6 +26,6 @@ def add_state_changes():
 
 @api.route('/', methods=["delete"])
 def delete_state_changes():
-    to_remove = StateChange.from_dictionary(request.get_json(force=True))
-    result = model.remove(to_remove.id)
+    to_remove = request.get_json(force=True)
+    result = model.remove(to_remove['_id'])
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
