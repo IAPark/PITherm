@@ -8,7 +8,7 @@ db = client.PITherm
 
 
 def remove(to_remove):
-    return db.state_changes.remove({"_id": to_remove})
+    return db.state_changes.remove({"_id": ObjectId(to_remove)})
 
 
 class StateChange:
