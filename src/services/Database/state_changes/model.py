@@ -1,4 +1,3 @@
-from calendar import timegm
 from datetime import datetime
 from bson import ObjectId
 from pymongo import MongoClient
@@ -56,8 +55,17 @@ class StateChange:
     @classmethod
     def get_current(cls, now):
         result = cls.collection.find_one({"start": {"$lte": now}, "end": {"$gte": now}})
-        result["start"] = timegm(result["start"].utctimetuple())
-        result["end"] = timegm(result["end"].utctimetuple())
+        if result is None:
+            return None
+        return cls.from_dictionary(result)
+
+    @classmethod
+    def get_next(cls, now):
+        print("get_next")
+        result = cls.collection.find_one({"$query": {"start": {"$gte": now}}, "$orderby": {"now": 1}})
+        if result is None:
+            return None
+
         return cls.from_dictionary(result)
 
     @classmethod

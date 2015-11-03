@@ -3,6 +3,8 @@ from bson import json_util
 from flask import Blueprint, Response, request
 from flask.ext.cors import CORS
 from model import StateChange
+from datetime import datetime
+
 
 api = Blueprint("state_changes", __name__, url_prefix='/schedule')
 CORS(api)
@@ -16,8 +18,23 @@ def get():
 
 @api.route('/current')
 def get_current():
-    return "not implemented"
+    current = StateChange.get_current(datetime.utcnow())
 
+    if current is None:
+        return Response(json.dumps({"data": None, "error": ["can't find"]},
+                                   default=json_util.default), mimetype='application/json')
+
+    return Response(json.dumps({"data": current.to_dictionary()}, default=json_util.default), mimetype='application/json')
+
+@api.route('/next')
+def get_next():
+    next = StateChange.get_next(datetime.utcnow())
+
+    if next is None:
+        return Response(json.dumps({"data": None, "error": ["can't find"]},
+                                   default=json_util.default), mimetype='application/json')
+
+    return Response(json.dumps({"data": next.to_dictionary()}, default=json_util.default), mimetype='application/json')
 
 @api.route('/', methods=["post"])
 def add():
