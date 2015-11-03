@@ -1,4 +1,3 @@
-
 from bson import ObjectId
 from pymongo import MongoClient
 from state_changes import StateChange
@@ -55,6 +54,21 @@ class StateChangeWeekly(StateChange):
                     "week_time": 1}
                 },
                 {"$sort": {"time_delta": 1}}
+            ]).next()
+        return cls.from_dictionary(result)
+
+    @classmethod
+    def get_next(cls, now):
+        week_time = now.weekday() * 24 * 60 ** 2 + (now.hour * 60 + now.minute) * 60
+        result = cls.collection.aggregate(
+            [
+                {"$project": {
+                    "time_delta": {"$mod": [{"$add": [{"$subtract": [week_time, "$week_time"]}, 24 * 7 * 60 ** 2]},
+                                            24 * 7 * 60 ** 2]},
+                    "state": 1,
+                    "week_time": 1}
+                },
+                {"$sort": {"time_delta": -1}}
             ]).next()
         return cls.from_dictionary(result)
 

@@ -1,4 +1,6 @@
 import json
+from datetime import datetime
+
 from bson import json_util
 from flask import Blueprint, Response, request
 from flask.ext.cors import CORS
@@ -15,8 +17,13 @@ def get():
 
 @api.route('/current')
 def get_current():
-    return "not implemented"
+    current = StateChangeWeekly.get_current(datetime.utcnow())
+    return Response(json.dumps({"data": current.to_dictionary()}, default=json_util.default), mimetype='application/json')
 
+@api.route('/next')
+def get_next():
+    next = StateChangeWeekly.get_next(datetime.utcnow())
+    return Response(json.dumps({"data": next.to_dictionary()}, default=json_util.default), mimetype='application/json')
 
 @api.route('/', methods=["post"])
 def add():
