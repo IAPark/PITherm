@@ -7,10 +7,6 @@ client = MongoClient()
 db = client.PITherm
 
 
-def remove(to_remove):
-    return db.state_changes.remove({"_id": ObjectId(to_remove)})
-
-
 class StateChange:
     collection = db.state_changes
 
@@ -27,6 +23,10 @@ class StateChange:
         assert type(AC_target) is int or float
         assert type(heater_target) is int or float
         assert type(fan) is int or float
+
+    @classmethod
+    def remove(cls, to_remove):
+        return cls.collection.remove({"_id": ObjectId(to_remove)})
 
     @classmethod
     def from_dictionary(cls, json):
