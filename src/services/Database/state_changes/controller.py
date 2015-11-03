@@ -3,29 +3,29 @@ from bson import json_util
 from flask import Blueprint, Response, request
 from flask.ext.cors import CORS
 from model import StateChange
-import model
 
-api = Blueprint("state_changes", __name__, url_prefix='/state_changes')
+api = Blueprint("state_changes", __name__, url_prefix='/schedule')
 CORS(api)
 
 
 @api.route('/', methods=["GET"])
-def get_state_changes():
+def get():
     result = StateChange.get_all_dic()
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
 
+
 @api.route('/current')
-def get_current_state_change():
+def get_current():
     return "not implemented"
 
 
 @api.route('/', methods=["post"])
-def add_state_changes():
+def add():
     result = StateChange.from_dictionary(request.get_json(force=True)).save()
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
 
 @api.route('/', methods=["delete"])
-def delete_state_changes():
+def delete():
     to_remove = request.get_json(force=True)
-    result = model.remove(to_remove['_id'])
+    result = StateChange.remove(to_remove['_id'])
     return Response(json.dumps({"data": result}, default=json_util.default), mimetype='application/json')
