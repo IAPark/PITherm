@@ -34,12 +34,12 @@ A script to monitor temperature will broadcast this information to the Database 
 
 example usage: `sudo python TemperatureMonitor.py [Database URL] [StateController URL]`
 
-## StateController
+## ThresholdController
 A script to monitor temperature changes and the state change schedule and based on these request a change to the state when needed
 
 ### API
 * POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications will be made by the Database `{time, /*linux time when temp was recorded*/ sensor_id (string), temp: /*temperature in centigrade*/}`
-* POST on_state_change/ inform the controller that the state has been changed
+* POST state/ sets the hold temperatures and fan state
 
 
 ## ForcedAirController
