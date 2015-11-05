@@ -1,10 +1,10 @@
 # PITherm
 A Raspberry PI as a thermostat 
 
-## Database
-A Flask based Python script which exposes a restful api to get and set schedule information and get and set temperature
+## Schedule
+A Flask based Python script which exposes a restful api to get and set schedule information
 
-example usage: `sudo python TemperatureMonitor.py [StateController]`
+example usage: `sudo python Schedule.py`
 
 
 ### API
@@ -22,6 +22,8 @@ Uses basic auth for all routes
 * POST schedule/ Add a scheduled state change `{start, /*linux time*/ end, _id, state: {AC_target, heater_target, fan} } `
 * DELETE schedule/repeating Remove a scheduled state change by id
 
+* GET state/:time gets the state for a given time in unix time`{AC_target, heat_target, fan}`
+
 #### Planned
 
 * POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications will be made by the Database `{time, /*linux time when temp was recorded*/ sensor_id (string), temp: /*temperature in centigrade*/}`
@@ -37,9 +39,11 @@ example usage: `sudo python TemperatureMonitor.py [Database URL] [StateControlle
 ## ThresholdController
 A script to monitor temperature changes and the state change schedule and based on these request a change to the state when needed
 
+example usage: `python ThresholdController [ForcedAirController URL] [Database URL]`
+
 ### API
 * POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications will be made by the Database `{time, /*linux time when temp was recorded*/ sensor_id (string), temp: /*temperature in centigrade*/}`
-* POST state/ sets the hold temperatures and fan state
+Will update ForcedAirController if needed and request the current state from Database
 
 
 ## ForcedAirController
