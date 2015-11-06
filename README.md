@@ -4,7 +4,7 @@ A Raspberry PI as a thermostat
 ## Schedule
 A Flask based Python script which exposes a restful api to get and set schedule information
 
-example usage: `sudo python Schedule.py`
+example usage: `sudo python Schedule.py []`
 
 
 ### API
@@ -42,8 +42,9 @@ A script to monitor temperature changes and the state change schedule and based 
 example usage: `python ThresholdController [ForcedAirController URL] [Schedule URL] [threshold]`
 
 ### API
-* POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no noise reduction
+* POST /temp informs the system of a temperature change data should be cleaned as much as possible as no noise reduction
  will be attempted `{temp: /*temperature in centigrade*/}`
+* POST /state informs the system of a change to the schedule will attempt to fetch a new 
 Will update ForcedAirController if needed and request the current state from the Schedule
 
 ### Behavior
@@ -51,7 +52,7 @@ Will update ForcedAirController if needed and request the current state from the
 * A request to turn on heat will be sent if temp < heat_target - threshold
 * Both AC and heater will be turned off if temp is between AC_target and heat_target
 
-## ForcedAirController
+## ForcedAir
 A script to actually control the air handling system
 
 ### API
@@ -59,3 +60,15 @@ A script to actually control the air handling system
 * POST ac/:on_or_off Sets ac state to on_or_off
 * POST heater/:on_or_off Sets Heater to on_or_off
 * POST fan/:on_or_off Sets fan to on_or_off by default
+
+#Class Diagram Design YUML
+
+    [State Provider||+state(time: int)], [State Provider]updates-.-> [Temp Controller]
+    [State Provider]^-[Schedule]
+    
+    [Temp Controller||+temp(temperature: double);+update()]
+    [Temp Controller]^-[Threshold Controller]
+    [Temp Controller]gets state-.->[State Provider]
+    [Temp Controller]controllers-.->[AC System]
+    
+    [AC System||+ac(on: bool);+heater(on: bool)], [AC System]^-[Forced Air;+fan(on: bool)]
