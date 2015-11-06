@@ -32,19 +32,23 @@ Uses basic auth for all routes
 # Planned
 
 ## TemperatureMonitor
-A script to monitor temperature will broadcast this information to the Database and the StateController
+A script to monitor temperature will broadcast this information to the ThresholdController
 
-example usage: `sudo python TemperatureMonitor.py [Database URL] [StateController URL]`
+example usage: `sudo python TemperatureMonitor.py [StateController URL]`
 
 ## ThresholdController
 A script to monitor temperature changes and the state change schedule and based on these request a change to the state when needed
 
-example usage: `python ThresholdController [ForcedAirController URL] [Database URL]`
+example usage: `python ThresholdController [ForcedAirController URL] [Schedule URL] [threshold]`
 
 ### API
 * POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications will be made by the Database `{time, /*linux time when temp was recorded*/ sensor_id (string), temp: /*temperature in centigrade*/}`
-Will update ForcedAirController if needed and request the current state from Database
+Will update ForcedAirController if needed and request the current state from the Schedule
 
+### Behavior
+* A request to turn on AC will be sent if temp > AC_target + threshold
+* A request to turn on heat will be sent if temp < heat_target - threshold
+* Both AC and heater will be turned off if temp is between AC_target and heat_target
 
 ## ForcedAirController
 A script to actually control the air handling system
