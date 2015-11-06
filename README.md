@@ -39,7 +39,8 @@ example usage: `sudo python TemperatureMonitor.py [StateController URL]`
 ## ThresholdController
 A script to monitor temperature changes and the state change schedule and based on these request a change to the state when needed
 
-example usage: `python ThresholdController [ForcedAirController URL] [Schedule URL] [threshold]`
+example usage: `python ThresholdController.py [-h] [-p PORT] AC_system_url state_provider_url threshold
+`
 
 ### API
 * POST /temp informs the system of a temperature change data should be cleaned as much as possible as no noise reduction
