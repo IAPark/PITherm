@@ -1,12 +1,13 @@
 from bson import ObjectId
 from pymongo import MongoClient
-from state_changes import StateChange
+
+from .. import state_changes
 
 client = MongoClient()
 db = client.PITherm
 
 
-class StateChangeWeekly(StateChange):
+class StateChangeWeekly(state_changes.StateChange):
     collection = db.state_changes_weekly
 
     def __init__(self, seconds_into_week, AC_target, heater_target, fan, id=None):
@@ -16,7 +17,7 @@ class StateChangeWeekly(StateChange):
         self.heater_target = heater_target
         self.fan = fan
 
-        assert type(seconds_into_week) is int or long
+        assert type(seconds_into_week) is int
         assert type(AC_target) is int or float
         assert type(heater_target) is int or float
         assert type(fan) is int or float

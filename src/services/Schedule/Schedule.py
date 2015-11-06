@@ -1,6 +1,6 @@
 from flask import Flask
-import state_changes
-import state_changes_weekly
+from src import state_changes
+from src import state_changes_weekly
 
 app = Flask(__name__)
 
