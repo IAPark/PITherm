@@ -42,7 +42,8 @@ A script to monitor temperature changes and the state change schedule and based 
 example usage: `python ThresholdController [ForcedAirController URL] [Schedule URL] [threshold]`
 
 ### API
-* POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications will be made by the Database `{time, /*linux time when temp was recorded*/ sensor_id (string), temp: /*temperature in centigrade*/}`
+* POST temp/ informs the system of a temperature change data should be cleaned as much as possible as no modifications
+ will be made by the Database `{temp: /*temperature in centigrade*/}`
 Will update ForcedAirController if needed and request the current state from the Schedule
 
 ### Behavior
