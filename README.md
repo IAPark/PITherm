@@ -72,4 +72,5 @@ A script to actually control the air handling system
     [Temp Controller]gets state-.->[State Provider]
     [Temp Controller]controllers-.->[AC System]
     
+    [Temperature Monitor]informs-.->[Temp Controller]
     [AC System||+ac(on: bool);+heater(on: bool)], [AC System]^-[Forced Air;+fan(on: bool)]
