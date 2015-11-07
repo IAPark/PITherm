@@ -10,11 +10,11 @@ example usage: `sudo python Schedule.py []`
 ### API
 Uses basic auth for all routes
 
-* GET schedule/repeating Lists all scheduled repeating state changes in order of the next to occur
-* GET schedule/repeating/next get the next repeating state change to happen
-* GET schedule/repeating/current get the current repeating state change active
-* POST schedule/repeating Add a scheduled repeating state change `{week_time, /*seconds into the week*/ _id, state: {AC_target, heater_target, fan} } `
-* DELETE schedule/repeating Remove a scheduled state change by id
+* GET schedule/weekly Lists all scheduled repeating state changes in order of the next to occur
+* GET schedule/weekly/next get the next repeating state change to happen
+* GET schedule/weekly/current get the current repeating state change active
+* POST schedule/weekly Add a scheduled repeating state change `{week_time, /*seconds into the week*/ _id, state: {AC_target, heater_target, fan} } `
+* DELETE schedule/weekly Remove a scheduled state change by id
 
 * GET schedule/ Lists all scheduled  state changes in order of the next to occur
 * GET schedule/next get the next state change to happen

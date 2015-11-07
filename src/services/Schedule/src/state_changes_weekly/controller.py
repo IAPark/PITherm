@@ -6,7 +6,7 @@ from flask import Blueprint, Response, request
 from flask.ext.cors import CORS
 from .model import StateChangeWeekly
 
-api = Blueprint("state_changes_weekly", __name__, url_prefix='/schedule/repeating')
+api = Blueprint("state_changes_weekly", __name__, url_prefix='/schedule/weekly')
 CORS(api)
 
 
