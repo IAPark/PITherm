@@ -9,7 +9,6 @@ from TestingServices import FakeForcedAirController
 from TestingServices import FakeSchedule
 
 
-
 class SetTemp(unittest.TestCase):
     url = "http://localhost:5000/temp"
 
