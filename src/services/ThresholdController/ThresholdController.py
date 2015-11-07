@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='Control temperature based on a thr
 parser.add_argument("AC_system_url", help="the url of the AC_system to use")
 parser.add_argument("state_provider_url", help="the url of the State Provider to use")
 parser.add_argument("threshold", default=3, type=float, help="the threshold to use")
-parser.add_argument("-p", "--port", type=int, help="the port to run server on")
+parser.add_argument("-p", "--port", type=int, help="the port to run server on", default=5000)
 args = parser.parse_args()
 
 app = Flask(__name__)
@@ -49,4 +49,4 @@ def temp_changed():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=args.port)
