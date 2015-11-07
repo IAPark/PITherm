@@ -46,7 +46,8 @@ class StateChangeWeekly(state_changes.StateChange):
     @classmethod
     def get_current(cls, now):
         week_time = now.weekday() * 24 * 60 ** 2 + (now.hour * 60 + now.minute) * 60
-        result = cls.collection.aggregate(
+        try:
+            result = cls.collection.aggregate(
             [
                 {"$project": {
                     "time_delta": {"$mod": [{"$add": [{"$subtract": [week_time, "$week_time"]}, 24 * 7 * 60 ** 2]},
@@ -56,6 +57,8 @@ class StateChangeWeekly(state_changes.StateChange):
                 },
                 {"$sort": {"time_delta": 1}}
             ]).next()
+        except StopIteration:
+            return None
         return cls.from_dictionary(result)
 
     @classmethod
