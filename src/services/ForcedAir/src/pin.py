@@ -32,7 +32,7 @@ class Pin:
 
 class InputPin(Pin):
     def __init__(self, pin_id):
-        super().__init__(pin_id)
+        Pin.__init__(self, pin_id)
         GPIO.setup(self.pin_id, GPIO.IN)
 
     def sense(self):
@@ -49,7 +49,7 @@ class InputPin(Pin):
 
 class OutputPin(Pin):
     def __init__(self, pin_id):
-        super().__init__(pin_id)
+        Pin.__init__(self, pin_id)
         GPIO.setup(self.pin_id, GPIO.OUT)
 
     def sense(self):
