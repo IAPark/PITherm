@@ -6,7 +6,7 @@ from src.pin import OutputPin
 parser = argparse.ArgumentParser(description='Controls an AC System')
 parser.add_argument("-p", "--port", type=int, help="the port to run server on", default=5003)
 parser.add_argument("-a", "--AC_pin", type=int, help="the pin to turn on to activate the AC system", default=4)
-parser.add_argument("-h", "--heater_pin", type=int, help="the pin to turn on to activate the heater", default=5)
+parser.add_argument("--heater_pin", type=int, help="the pin to turn on to activate the heater", default=5)
 parser.add_argument("-f", "--fan_pin", type=int, help="the pin to turn on to activate the fan", default=6)
 
 
