@@ -12,10 +12,12 @@ parser.add_argument("-f", "--fan_pin", type=int, help="the pin to turn on to act
 
 args = parser.parse_args()
 
-
-AC_pin = OutputPin(args.AC_pin)
-heater_pin = OutputPin(args.heater_pin)
-fan_pin = OutputPin(args.fan_pin)
+if args.AC_pin:
+    AC_pin = OutputPin(args.AC_pin)
+if args.heater_pin:
+    heater_pin = OutputPin(args.heater_pin)
+if args.fan_pin:
+    fan_pin = OutputPin(args.fan_pin)
 
 
 app = Flask(__name__)
