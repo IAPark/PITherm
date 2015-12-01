@@ -22,21 +22,21 @@ app = Flask(__name__)
 
 
 @app.route("/ac/<on_off>", methods=["POST", "GET"])
-def ac(on_off: str):
+def ac(on_off):
     on = on_off == 'on'
     AC_pin.set(on)
     return on_off
 
 
 @app.route("/heater/<on_off>", methods=["POST", "GET"])
-def heater(on_off: str):
+def heater(on_off):
     on = on_off == 'on'
     heater_pin.set(on)
     return on_off
 
 
 @app.route("/fan/<on_off>", methods=["POST", "GET"])
-def fan(on_off: str):
+def fan(on_off):
     on = on_off == 'on'
     fan_pin.set(on)
     return on_off
