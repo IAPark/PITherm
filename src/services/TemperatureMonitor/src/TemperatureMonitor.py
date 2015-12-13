@@ -4,7 +4,7 @@ import requests
 
 
 class TemperatureMonitor:
-    def __init__(self, temperature_sensor, interval=60, smoothing: int=5, observers=()):
+    def __init__(self, temperature_sensor, interval=60, smoothing=5, observers=()):
         self.temperature_sensor = temperature_sensor
         self.interval = interval
         self.smoothing = smoothing
@@ -28,6 +28,6 @@ class TemperatureMonitor:
 
         self.report(average)
 
-    def report(self, temp: float):
+    def report(self, temp):
         for observer in self.observers:
             requests.post(observer, json={"temp": temp})
