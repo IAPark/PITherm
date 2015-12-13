@@ -4,7 +4,7 @@ import requests
 
 
 class TemperatureMonitor:
-    def __init__(self, temperature_sensor, interval = 60, smoothing: int=5, observers=()):
+    def __init__(self, temperature_sensor, interval=60, smoothing: int=5, observers=()):
         self.temperature_sensor = temperature_sensor
         self.interval = interval
         self.smoothing = smoothing
