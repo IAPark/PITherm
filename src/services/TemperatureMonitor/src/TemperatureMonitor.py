@@ -18,7 +18,7 @@ class TemperatureMonitor:
 
     def check_temp(self):
         self.history = self.history[:self.smoothing-1]
-        self.history.append(self.temperature_sensor.get_temp())
+        self.history.insert(0,self.temperature_sensor.get_temp())
 
         sum = 0.0
         for temp in self.history:
