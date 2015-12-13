@@ -16,16 +16,4 @@ class TemperatureSensor:
         temp = ((MSB << 8 | LSB) >> 4) * 0.0625
         result = temp
 
-        # smooth the data slightly
-        history_length = 3
-
-        for t in self.temp_history:
-            if abs(t - temp) > 0.2:
-                result = self.last_temp
-                break
-
-        self.temp_history.append(temp)
-        self.temp_history = self.temp_history[0:history_length]
-        self.last_temp = result
-
         return result
