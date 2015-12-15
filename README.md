@@ -20,7 +20,7 @@ Uses basic auth for all routes
 * GET schedule/next get the next state change to happen
 * GET schedule/current get the current state change active
 * POST schedule/ Add a scheduled state change `{start, /*linux time*/ end, _id, state: {AC_target, heater_target, fan} } `
-* DELETE schedule/repeating Remove a scheduled state change by id
+* DELETE schedule/ Remove a scheduled state change by id
 
 * GET state/:time gets the state for a given time in unix time`{AC_target, heat_target, fan}`
 
@@ -62,7 +62,25 @@ A script to actually control the air handling system
 * POST heater/:on_or_off Sets Heater to on_or_off
 * POST fan/:on_or_off Sets fan to on_or_off by default
 
-#Class Diagram Design YUML
+## InterfaceBackend
+A system to securely allow control of the AC system through an interface
+
+### Users
+User authentication will be minimal. It is designed to prevent unauthorized access but not much more.
+Requests must use basic auth
+
+### API
+
+* GET schedule/weekly Lists all scheduled repeating state changes in order of the next to occur
+* POST schedule/weekly Add a scheduled repeating state change `{week_time, /*seconds into the week*/ _id, state: {AC_target, heater_target, fan} } `
+* DELETE schedule/weekly Remove a scheduled state change by id
+
+* GET schedule/ Lists all scheduled state changes in order of the next to occur
+* POST schedule/ Add a scheduled state change `{start, /*linux time*/ end, _id, state: {AC_target, heater_target, fan} } `
+* DELETE schedule/ Remove a scheduled state change by id
+
+
+# Class Diagram Design YUML
 
     [State Provider||+state(time: int)], [State Provider]updates-.-> [Temp Controller]
     [State Provider]^-[Schedule]
