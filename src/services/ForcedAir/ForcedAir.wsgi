@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+
 from run import app as application
 from run import AC_pin
 from run import heater_pin
