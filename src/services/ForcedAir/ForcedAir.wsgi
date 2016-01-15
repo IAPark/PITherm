@@ -1,8 +1,8 @@
-from ForcedAir import app as application
-from ForcedAir import AC_pin
-from ForcedAir import heater_pin
-from ForcedAir import fan_pin
-import ForcedAir
-ForcedAir.AC_pin = 17
-ForcedAir.heater_pin = 18
-ForcedAir.fan_pin = 4
+from run import app as application
+from run import AC_pin
+from run import heater_pin
+from run import fan_pin
+import run
+run.AC_pin = 17
+run.heater_pin = 18
+run.fan_pin = 4
