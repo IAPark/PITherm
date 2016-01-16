@@ -4,11 +4,6 @@ import time
 from flask import Flask
 from src.pin import OutputPin
 
-lockout = 0
-AC_pin_number = None
-heater_pin_number = None
-fan_pin_number = None
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Controls an AC System')
     parser.add_argument("-p", "--port", type=int, help="the port to run server on", default=5003)
