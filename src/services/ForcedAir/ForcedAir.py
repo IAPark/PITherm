@@ -45,10 +45,12 @@ def ac(on_off):
     global ac, last_change
     old = ac
     ac = on_off == 'on'
+    '''
     if heater_pin.get() and ac:
         app.logger.error("Attempted to to turn ac on while heater was running")
         ac = False
         return "error: heater on"
+    '''
 
     if time.time() - last_change < lockout and old != ac:
         ac = old
@@ -64,11 +66,11 @@ def heater(on_off):
     old = heater
 
     heater = on_off == 'on'
-    if AC_pin.get() and heater:
+    '''if AC_pin.get() and heater:
         app.logger.error("Attempted to to turn heater on while ac was running")
         heater = False
         return "error: AC on"
-
+    '''
     if time.time() - last_change < lockout and old != heater:
         heater = old
 
