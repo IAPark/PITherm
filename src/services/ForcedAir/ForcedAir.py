@@ -42,10 +42,10 @@ last_change = 0
 
 @app.route("/ac/<on_off>", methods=["POST", "GET"])
 def ac(on_off):
-    global ac, heater, last_change
+    global ac, last_change
     old = ac
     ac = on_off == 'on'
-    if heater and ac:
+    if heater_pin.get() and ac:
         app.logger.error("Attempted to to turn ac on while heater was running")
         ac = False
         return "error: heater on"
@@ -64,7 +64,7 @@ def heater(on_off):
     old = heater
 
     heater = on_off == 'on'
-    if ac and heater:
+    if AC_pin.get() and heater:
         app.logger.error("Attempted to to turn heater on while ac was running")
         heater = False
         return "error: AC on"
