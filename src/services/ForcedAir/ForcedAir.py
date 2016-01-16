@@ -5,9 +5,9 @@ from flask import Flask
 from src.pin import OutputPin
 
 lockout = 0
-AC_pin = 0
-heater_pin = 0
-fan_pin = 0
+AC_pin_number = None
+heater_pin_number = None
+fan_pin_number = None
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Controls an AC System')
@@ -20,15 +20,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     lockout = args.lockout
+    AC_pin_number = args.AC_pin
+    heater_pin_number = args.heater_pin
+    fan_pin_number = args.fan_pin
 
-    if args.AC_pin:
-        AC_pin = OutputPin(args.AC_pin)
-    if args.heater_pin:
-        heater_pin = OutputPin(args.heater_pin)
-    if args.fan_pin:
-        fan_pin = OutputPin(args.fan_pin)
+if AC_pin_number:
+    AC_pin = OutputPin(AC_pin_number)
+if heater_pin_number:
+    heater_pin = OutputPin(heater_pin_number)
+if fan_pin_number:
+    fan_pin = OutputPin(fan_pin_number)
 
 app = Flask(__name__)
+app.debug = True
 
 ac = False
 heater = False
@@ -38,7 +42,7 @@ last_change = 0
 
 @app.route("/ac/<on_off>", methods=["POST", "GET"])
 def ac(on_off):
-    global ac, last_change
+    global ac, heater, last_change
     old = ac
     ac = on_off == 'on'
     if heater and ac:
